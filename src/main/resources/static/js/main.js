@@ -1,3 +1,18 @@
+$(document).ready(function () {
+    $.ajax({
+        "url":"http://localhost:1272/userSession",
+        "method":"GET",
+        "cache":false,
+        "async":false,
+        success:function(res){
+            console.log(res);
+            if(res  != "") {
+                window.location.href = "/welcome";
+            }
+        }
+    })
+});
+
 function login() {
     alert("登录中...");
     var usrname = $("#userId").val();
@@ -16,6 +31,7 @@ function login() {
             console.log(res);
             if(res == true){
                 alert("登录成功");
+                window.location.href="/welcome";
             }else if(res == false){
                 alert("密码错误或用户名不存在");
             }else{

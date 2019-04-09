@@ -23,6 +23,10 @@ public class Regcontroll {
     String home(){
         return "index";
     }
+    @RequestMapping("/welcome")
+    String welcome(){
+        return "welcome";
+    }
     @RequestMapping("/reg")
     @ResponseBody
     boolean reg(@RequestParam("loginPwd") String loginNum, @RequestParam("userId") String userId){
