@@ -16,7 +16,7 @@ public class RegController {
     private IRegService regService;
     @RequestMapping("/")
     String home(){
-        return "index";
+        return "frontEnd/index";
     }
     @RequestMapping("/welcome")
     String welcome(){
