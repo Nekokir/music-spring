@@ -92,6 +92,43 @@ public class Functions {
         }
     }
 
+    public static JsonResponse getPic(String url,String site){
+        RestTemplate ch = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        if(site.equals("netease")){
+            Map<String,String> head = new LinkedHashMap<>();
+            Random r = new Random();
+            System.out.println(long2ip(r.nextLong()%74751 + 1884815360L));
+            head.put("X-Real-IP",long2ip(r.nextLong()%74751 + 1884815360L));
+            head.put("Cookie","appver=2.0.2");
+            head.put("Accept-Language","zh-CN,zh;q=0.8,gl;q=0.6,zh-TW;q=0.4");
+            head.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
+            head.put("Content-Type","application/x-www-form-urlencoded");
+            headers.setAll(head);
+            headers.set("Referer","http://music.163.com/");
+        }else if(site.equals("qq")){
+            headers.set("Referer","http://y.qq.com/");
+            headers.set("Origin","https://y.qq.com");
+            headers.set("Content-Type","application/x-www-form-urlencoded");
+        }else if(site.equals("kugou")){
+            headers.set("User-Agent","IPhone-8990-searchSong");
+            headers.set("UNI-UserAgent","iOS11.4-Phone8990-1009-0-WiFi");
+        }else if(site.equals("xiami")){
+            headers.set("Referer","https://h.xiami.com/");
+        }
+        HttpEntity<MultiValueMap<String,String>> requestEntity = new HttpEntity<>(null,headers);
+        ResponseEntity<String> response = ch.exchange(url, HttpMethod.GET, requestEntity, String.class);
+        System.out.println(response.getBody());
+        try {
+            String data = Base64.getEncoder().encodeToString(response.getBody().getBytes());
+            return new JsonResponse(true,data);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new JsonResponse(false,new Fail(-1,"请求出错"));
+        }
+    }
+
     public static JsonResponse getAlbum(String site,String id){
         System.out.println(site);
         System.out.println(id);
