@@ -7,6 +7,7 @@ import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.*;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -118,11 +119,10 @@ public class Functions {
             headers.set("Referer","https://h.xiami.com/");
         }
         HttpEntity<MultiValueMap<String,String>> requestEntity = new HttpEntity<>(null,headers);
-        ResponseEntity<String> response = ch.exchange(url, HttpMethod.GET, requestEntity, String.class);
-        System.out.println(response.getBody());
+        ResponseEntity<byte[]> response = ch.exchange(url, HttpMethod.GET, requestEntity, byte[].class);
         try {
-            String data = Base64.getEncoder().encodeToString(response.getBody().getBytes());
-            return new JsonResponse(true,data);
+            byte[] data = response.getBody();
+            return new JsonResponse(true,Base64.getEncoder().encodeToString(data));
         }catch (Exception e){
             e.printStackTrace();
             return new JsonResponse(false,new Fail(-1,"请求出错"));

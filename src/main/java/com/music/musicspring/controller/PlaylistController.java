@@ -1,7 +1,7 @@
 package com.music.musicspring.controller;
 
 import com.music.musicspring.entity.Fail;
-import com.music.musicspring.entity.Favor;
+import com.music.musicspring.entity.FavorPlaylist;
 import com.music.musicspring.entity.JsonResponse;
 import com.music.musicspring.service.IaddFavorService;
 import com.music.musicspring.service.IgetFavorService;
@@ -16,36 +16,34 @@ import java.util.ArrayList;
 
 @Controller
 @EnableAutoConfiguration
-public class FavorController {
+public class PlaylistController {
     @Autowired
     private IaddFavorService addFavorService;
     @Autowired
     private IgetFavorService getFavorService;
-    @RequestMapping("/get_favor")
+    @RequestMapping("/get_favor_playlist")
     @ResponseBody
-    public JsonResponse getFavor(@RequestParam("type") String type, @RequestParam("userId") String userId){
-        ArrayList<Favor> favors = getFavorService.getFavor(userId,type);
+    public JsonResponse getPlaylist(@RequestParam("userId") String userId){
+        ArrayList<FavorPlaylist> favors = getFavorService.getPlaylist(userId);
         if(favors != null){
             return new JsonResponse(true,favors);
         }else{
             return new JsonResponse(false,new Fail(0,"未查询到收藏"));
         }
     }
-    @RequestMapping("/add_favor")
+    @RequestMapping("/add_favor_playlist")
     @ResponseBody
-    public JsonResponse addFavor(@RequestParam("type") String type, @RequestParam("site") String site, @RequestParam("userId") String userId, @RequestParam("id") String id){
-        int code = addFavorService.addFavor(userId,site,type,id);
+    public JsonResponse addPlaylist( @RequestParam("site") String site, @RequestParam("userId") String userId, @RequestParam("id") String id,
+                                 @RequestParam("name") String name, @RequestParam("creator") String creator, @RequestParam("size") int size){
+        int code = addFavorService.addPlaylist(site, userId, id, name, creator, size);
         if(code == 1){
             return new JsonResponse(true);
         }else if(code == 0){
             return new JsonResponse(false,new Fail(code,"输入了无效站点"));
         }else if(code == -1){
             return new JsonResponse(false,new Fail(code,"输入了无效ID"));
-        }else if(code == -2){
-            return new JsonResponse(false,new Fail(code,"输入了无效type"));
         }else {
             return new JsonResponse(false,new Fail(code,"服务器错误"));
         }
     }
-
 }

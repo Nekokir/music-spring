@@ -8,15 +8,20 @@ import org.springframework.stereotype.Service;
 public class RegService implements IRegService {
     @Autowired
     private UserMapper userMapper;
-    public boolean regUser(String userId, String pwd){
+    public int regUser(String userId, String pwd){
 
-        boolean flag;
-        try {
-            flag = userMapper.insertUsers(userId,pwd);
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
+        Object res = userMapper.findUserByUserid(userId);
+        if(res != null){
+            return 0;
+        }else {
+            boolean flag;
+            try {
+                flag = userMapper.insertUsers(userId, pwd);
+                return 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
         }
-        return  flag;
     }
 }

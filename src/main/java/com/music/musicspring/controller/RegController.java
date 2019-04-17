@@ -1,5 +1,7 @@
 package com.music.musicspring.controller;
 
+import com.music.musicspring.entity.Fail;
+import com.music.musicspring.entity.JsonResponse;
 import com.music.musicspring.function.Functions;
 import com.music.musicspring.service.IRegService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class RegController {
     private IRegService regService;
     @RequestMapping("/")
     String home(){
-        return "frontEnd/index";
+        return "index";
     }
     @RequestMapping("/welcome")
     String welcome(){
@@ -24,15 +26,18 @@ public class RegController {
     }
     @RequestMapping("/reg")
     @ResponseBody
-    boolean reg(@RequestParam("loginPwd") String loginNum, @RequestParam("userId") String userId){
+    JsonResponse reg(@RequestParam("loginPwd") String loginNum, @RequestParam("userId") String userId){
         String pwd = Functions.creatMD5(loginNum);
         System.out.println(userId+":"+loginNum);
-        if(regService.regUser(userId,pwd)){
+        int code = regService.regUser(userId,pwd);
+        if(code == 1){
             System.out.println("yes");
-            return true;
-        }else {
+            return new JsonResponse(true);
+        }else if(code == 0){
             System.out.println("error");
-            return false;
+            return new JsonResponse(false,new Fail(code,"用户已存在，请登录"));
+        }else {
+            return new JsonResponse(false,new Fail(code,"服务器出错"));
         }
     }
 }

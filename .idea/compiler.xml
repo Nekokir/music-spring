@@ -6,11 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="music-spring" />
+        <module name="music-java" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="music-spring" target="1.8" />
+      <module name="music-java" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="music-java" options="-parameters" />
+    </option>
   </component>
 </project>

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 public class AddFavorService implements IaddFavorService {
     @Autowired
     private FavorMapper favorMapper;
-    public int addFavor(String userId, String site,String type,String id){
+
+    @Override
+    public int addSong(String userId, String site, String id, String name, String artists) {
         Object res;
         if (site.equals("kugou")) {
             res = Kugou.getSong(id);
@@ -26,18 +28,48 @@ public class AddFavorService implements IaddFavorService {
         if(res == null){
             return -1;
         }else{
-            if(type.equals("song")){
-                favorMapper.insertSong(userId, site, id);
-                return 1;
-            }else if(type.equals("album")){
-                favorMapper.insertAlbum(userId, site, id);
-                return 1;
-            }else if(type.equals("playlist")){
-                favorMapper.insertPlaylist(userId, site, id);
-                return 1;
-            }else{
-                return -2;
-            }
+            favorMapper.insertSong(userId, site, id, name, artists);
+            return 1;
+        }
+    }
+
+    @Override
+    public int addAlbum(String userId, String site, String id, String name, String artist, String publishtime, int size) {
+        Object res;
+        if (site.equals("kugou")) {
+            res = Kugou.getAlbum(id);
+        } else if (site.equals("netease")) {
+            res = Netease.getAlbum(id);
+        } else if (site.equals("qq")) {
+            res = Qq.getAlbum(id);
+        } else {
+            return 0;
+        }
+        if(res == null){
+            return -1;
+        }else{
+            favorMapper.insertAlbum(userId, site, id, name, artist, publishtime, size);
+            return 1;
+        }
+    }
+
+    @Override
+    public int addPlaylist(String userId, String site, String id, String name, String creator, int size) {
+        Object res;
+        if (site.equals("kugou")) {
+            res = Kugou.getPlaylist(id);
+        } else if (site.equals("netease")) {
+            res = Netease.getPlaylist(id);
+        } else if (site.equals("qq")) {
+            res = Qq.getPlaylist(id);
+        } else {
+            return 0;
+        }
+        if(res == null){
+            return -1;
+        }else{
+            favorMapper.insertPlaylist(userId, site, id, name, creator, size);
+            return 1;
         }
     }
 }
