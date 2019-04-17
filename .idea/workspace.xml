@@ -2,47 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f7d9d7a-83b8-4320-b806-e6822cc48df0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/css/icon.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/css/index.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/css/material.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/css/styles.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/font/2fcrYFNaTjcS6g4U3t-Y5StnKWgpfO2iSkLzTz-AABg.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/image/favicon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/image/icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/image/welcome_card.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/Dialog.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/img_blur.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/item.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/jquery-3.1.1.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/login.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/lrcToJs.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/material.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/md5.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/mobile.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/personal_info.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/player.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/js/playlist.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/album.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/fail.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/favor_album.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/favor_playlist.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/favor_song.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/login.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/playlist.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/search_album.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/search_pl.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/search_song.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/templates/frontEnd/test/song.json" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/music/musicspring/controller/RegController.java" afterPath="$PROJECT_DIR$/src/main/java/com/music/musicspring/controller/RegController.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/css/icon.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/css/index.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/css/material.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/css/styles.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/font/2fcrYFNaTjcS6g4U3t-Y5StnKWgpfO2iSkLzTz-AABg.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/image/favicon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/image/icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/image/welcome_card.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/Dialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/img_blur.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/item.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/jquery-3.1.1.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/login.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/lrcToJs.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/material.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/md5.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/mobile.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/personal_info.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/player.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/js/playlist.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/album.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/fail.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/favor_album.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/favor_playlist.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/favor_song.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/login.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/playlist.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/search_album.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/search_pl.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/search_song.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/frontEnd/test/song.json" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -252,6 +244,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="music-spring" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="music-spring" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -287,20 +305,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="music-spring" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="music-spring" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="frontEnd" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -739,12 +743,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1555492487288</updated>
-      <workItem from="1555492488661" duration="634000" />
+      <workItem from="1555492488661" duration="937000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="634000" />
+    <option name="totallyTimeSpent" value="937000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
