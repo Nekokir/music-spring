@@ -1,18 +1,8 @@
 package com.music.musicspring.entity;
 
 public class Favor {
-    private String favorId;
     private String id;
     private String site;
-    private String type;
-
-    public String getFavorId() {
-        return favorId;
-    }
-
-    public void setFavorId(String favorId) {
-        this.favorId = favorId;
-    }
 
     public String getId() {
         return id;
@@ -30,11 +20,4 @@ public class Favor {
         this.site = site;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 }

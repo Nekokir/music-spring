@@ -40,6 +40,18 @@ public class Functions {
         return  new BigInteger(1, md.digest()).toString(16);
     }
 
+    public static String long2ip(long ip) {
+        int [] b=new int[4] ;
+        b[0] = (int)((ip >> 24) & 0xff);
+        b[1] = (int)((ip >> 16) & 0xff);
+        b[2] = (int)((ip >> 8) & 0xff);
+        b[3] = (int)(ip & 0xff);
+        String x;
+        Integer p;
+        x=(b[0])+"."+b[1]+"."+b[2]+"."+b[3];
+        return x;
+    }
+
     public static JsonNode curl(String url,MultiValueMap<String, String> params, String sites, HttpMethod method){
         RestTemplate ch = new RestTemplate();
         //url="http://localhost:5000";
@@ -48,7 +60,9 @@ public class Functions {
         if(sites.equals("netease")){
             Map<String,String> head = new LinkedHashMap<>();
 
-            head.put("X-Real-IP","118.88.88.88");
+            Random r = new Random();
+            System.out.println(long2ip(r.nextLong()%74751 + 1884815360L));
+            head.put("X-Real-IP",long2ip(r.nextLong()%74751 + 1884815360L));
             head.put("Cookie","appver=2.0.2");
             head.put("Accept-Language","zh-CN,zh;q=0.8,gl;q=0.6,zh-TW;q=0.4");
             head.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");

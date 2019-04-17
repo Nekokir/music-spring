@@ -30,29 +30,34 @@ public class Kugou {
                     res.setSize(json.asInt());
                 } else return null;
                 json = root.get("info");
-                ArrayList<Song> songs = new ArrayList<>();
-                json.forEach((JsonNode node) -> {
-                    Song song = new Song();
-                    song.setAlbumId(res.getId());
-                    String sid = "{\"hash\":\""+node.get("hash").asText()+"\",\"album_id\":\""+id+"\"}";
-                    sid = urlsafeB64encode(sid);
-                    String[] filename = node.get("filename").asText().split(" - ");
-                    String[] artistname = filename[0].split("、");
+                if(json.size() != 0) {
+                    ArrayList<Song> songs = new ArrayList<>();
+                    json.forEach((JsonNode node) -> {
+                        Song song = new Song();
+                        song.setAlbumId(res.getId());
+                        String sid = "{\"hash\":\"" + node.get("hash").asText() + "\",\"album_id\":\"" + id + "\"}";
+                        sid = urlsafeB64encode(sid);
+                        String[] filename = node.get("filename").asText().split(" - ");
+                        String[] artistname = filename[0].split("、");
 
-                    song.setName(filename[1]);
-                    song.setId(sid);
-                    song.setLink(null);
-                    song.setLyrics(null);
-                    song.setTranslations(null);
-                    ArrayList<String> artists = new ArrayList<>();
-                    for (String i:artistname) {
-                        artists.add(i);
-                    }
-                    song.setArtists(artists);
-                    songs.add(song);
-                });
-                res.setSongs(songs);
-                return res;
+                        song.setName(filename[1]);
+                        song.setId(sid);
+                        song.setLink(null);
+                        song.setLyrics(null);
+                        song.setTranslations(null);
+                        ArrayList<String> artists = new ArrayList<>();
+                        for (String i : artistname) {
+                            artists.add(i);
+                        }
+                        song.setArtists(artists);
+                        songs.add(song);
+                    });
+                    res.setSongs(songs);
+                    return res;
+                }else {
+                    res.setId(null);
+                    return res;
+                }
             } else return null;
         } else {
             res.setId(null);
@@ -123,31 +128,36 @@ public class Kugou {
                     res.setSize(json.asInt());
                 } else return null;
                 json = root.get("info");
-                ArrayList<Song> songs = new ArrayList<>();
-                json.forEach((JsonNode node) -> {
-                    Song song = new Song();
-                    song.setAlbumId(node.get("album_id").asText());
-                    String[] filename = node.get("filename").asText().split(" - ");
-                    String[] artistname = filename[0].split("、");
-                    for (String x:filename) {
-                        System.out.println(x);
-                    }
-                    String sid = "{\"hash\":\""+node.get("hash").asText()+"\",\"album_id\":\""+id+"\"}";
-                    sid = urlsafeB64encode(sid);
-                    song.setName(filename[1]);
-                    song.setId(sid);
-                    song.setLink(null);
-                    song.setLyrics(null);
-                    song.setTranslations(null);
-                    ArrayList<String> artists = new ArrayList<>();
-                    for (String i:artistname) {
-                        artists.add(i);
-                    }
-                    song.setArtists(artists);
-                    songs.add(song);
-                });
-                res.setSongs(songs);
-                return res;
+                if(json.size() != 0) {
+                    ArrayList<Song> songs = new ArrayList<>();
+                    json.forEach((JsonNode node) -> {
+                        Song song = new Song();
+                        song.setAlbumId(node.get("album_id").asText());
+                        String[] filename = node.get("filename").asText().split(" - ");
+                        String[] artistname = filename[0].split("、");
+                        for (String x : filename) {
+                            System.out.println(x);
+                        }
+                        String sid = "{\"hash\":\"" + node.get("hash").asText() + "\",\"album_id\":\"" + id + "\"}";
+                        sid = urlsafeB64encode(sid);
+                        song.setName(filename[1]);
+                        song.setId(sid);
+                        song.setLink(null);
+                        song.setLyrics(null);
+                        song.setTranslations(null);
+                        ArrayList<String> artists = new ArrayList<>();
+                        for (String i : artistname) {
+                            artists.add(i);
+                        }
+                        song.setArtists(artists);
+                        songs.add(song);
+                    });
+                    res.setSongs(songs);
+                    return res;
+                }else {
+                    res.setId(null);
+                    return res;
+                }
             } else return null;
         } else {
             res.setId(null);
@@ -215,54 +225,56 @@ public class Kugou {
         Song res = new Song();
         if (jsonRoot != null) {
             res.setId(id);
-            String[] filename = jsonRoot.get("fileName").asText().split(" - ");
-            String[] artistname = filename[0].split("、");
+            if(jsonRoot.get("fileName")!=null) {
+                String[] filename = jsonRoot.get("fileName").asText().split(" - ");
+                String[] artistname = filename[0].split("、");
 
-            res.setName(filename[1]);
+                res.setName(filename[1]);
 
-            ArrayList<String> artists = new ArrayList<>();
-            for (String i : artistname) {
-                artists.add(i);
-            }
-            res.setArtists(artists);
-
-            //getLinkInfo
-
-            res.setLink(null);
-            JsonNode node = jsonRoot.get("url");
-            if (node != null) {
-                res.setLink(node.asText());
-            }
-
-            //getAlbumInfo
-
-            node = jsonRoot.get("albumid");
-            if (node != null) {
-                res.setAlbumId(node.asText());
-            }
-
-            res.setAlbumName(null);
-
-            node = jsonRoot.get("album_img");
-            if (node != null) {
-                res.setPicUrl(node.asText().replace("{size}","400"));
-            }
-
-            //getLyricsInfo
-            url = "http://krcs.kugou.com/search?keyword=%20-%20&ver=1&client=mobi&man=yes&hash=" + hash;
-
-            jsonRoot = curl(url, null, "qq", HttpMethod.GET);
-            if (jsonRoot != null && jsonRoot.get("candidates") != null && jsonRoot.get("candidates").get(0) != null ) {
-                String otherUrl = "http://lyrics.kugou.com/download?charset=utf8&client=mobi&fmt=lrc&ver=1&accesskey="+jsonRoot.get("candidates").get(0).get("accesskey").asText()+"&id="+jsonRoot.get("candidates").get(0).get("id").asText();
-                System.out.println(otherUrl);
-                jsonRoot = curl(otherUrl, null, "qq", HttpMethod.GET);
-                if(jsonRoot != null) {
-                    //System.out.println(jsonRoot.toString());
-                    res.setLyrics(new String(Base64.getDecoder().decode(jsonRoot.get("content").asText().getBytes())));
+                ArrayList<String> artists = new ArrayList<>();
+                for (String i : artistname) {
+                    artists.add(i);
                 }
-            }
+                res.setArtists(artists);
 
-            return res;
+                //getLinkInfo
+
+                res.setLink(null);
+                JsonNode node = jsonRoot.get("url");
+                if (node != null) {
+                    res.setLink(node.asText());
+                }
+
+                //getAlbumInfo
+
+                node = jsonRoot.get("albumid");
+                if (node != null) {
+                    res.setAlbumId(node.asText());
+                }
+
+                res.setAlbumName(null);
+
+                node = jsonRoot.get("album_img");
+                if (node != null) {
+                    res.setPicUrl(node.asText().replace("{size}", "400"));
+                }
+
+                //getLyricsInfo
+                url = "http://krcs.kugou.com/search?keyword=%20-%20&ver=1&client=mobi&man=yes&hash=" + hash;
+
+                jsonRoot = curl(url, null, "qq", HttpMethod.GET);
+                if (jsonRoot != null && jsonRoot.get("candidates") != null && jsonRoot.get("candidates").get(0) != null) {
+                    String otherUrl = "http://lyrics.kugou.com/download?charset=utf8&client=mobi&fmt=lrc&ver=1&accesskey=" + jsonRoot.get("candidates").get(0).get("accesskey").asText() + "&id=" + jsonRoot.get("candidates").get(0).get("id").asText();
+                    System.out.println(otherUrl);
+                    jsonRoot = curl(otherUrl, null, "qq", HttpMethod.GET);
+                    if (jsonRoot != null) {
+                        //System.out.println(jsonRoot.toString());
+                        res.setLyrics(new String(Base64.getDecoder().decode(jsonRoot.get("content").asText().getBytes())));
+                    }
+                }
+
+                return res;
+            }else return null;
         }else return null;
     }
 

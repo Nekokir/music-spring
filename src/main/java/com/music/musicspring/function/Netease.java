@@ -282,78 +282,80 @@ public class Netease {
         if (jsonRoot != null) {
             if (jsonRoot.get("songs") != null) {
                 jsonRoot = jsonRoot.get("songs").get(0);
-                JsonNode node = jsonRoot.get("id");
-                if (node != null) {
-                    res.setId(node.asText());
-                } else return null;
-                node = jsonRoot.get("name");
-                if (node != null) {
-                    res.setName(node.asText());
-                }
-                ArrayList<String> artists = new ArrayList<>();
-                node = jsonRoot.get("artists");
-                node.forEach((JsonNode son) -> {
-                    artists.add(son.get("name").asText());
-                });
-                res.setArtists(artists);
-
-                //getLinkInfo
-                res.setLink(null);
-                if (otherJson != null && otherJson.get("data") != null && otherJson.get("data").get(0) != null && otherJson.get("data").get(0).get("url") != null) {
-                    res.setLink(otherJson.get("data").get(0).get("url").asText());
-                } else {
-                    if (jsonRoot.get("hMusic") != null && jsonRoot.get("hMusic").get("dfsId") != null && jsonRoot.get("hMusic").get("dfsId").asInt() != 0) {
-                        res.setLink("https://p2.music.126.net/" + encrpyId(jsonRoot.get("hMusic").get("dfsId").asText()) + "/" + jsonRoot.get("hMusic").get("dfsId").asText() + ".mp3");
-                    } else if (jsonRoot.get("mMusic") != null && jsonRoot.get("mMusic").get("dfsId") != null && jsonRoot.get("mMusic").get("dfsId").asInt() != 0) {
-                        res.setLink("https://p2.music.126.net/" + encrpyId(jsonRoot.get("mMusic").get("dfsId").asText()) + "/" + jsonRoot.get("mMusic").get("dfsId").asText() + ".mp3");
-                    } else if (jsonRoot.get("bMusic") != null && jsonRoot.get("bMusic").get("dfsId") != null && jsonRoot.get("bMusic").get("dfsId").asInt() != 0) {
-                        res.setLink("https://p2.music.126.net/" + encrpyId(jsonRoot.get("bMusic").get("dfsId").asText()) + "/" + jsonRoot.get("bMusic").get("dfsId").asText() + ".mp3");
-                    } else if (jsonRoot.get("mp3Url") != null) {
-                        res.setLink(jsonRoot.get("mp3Url").asText().replace("http://m2", "http://p2"));
-                    }
-                }
-                if (res.getLink() != null) {
-                    res.setLink(res.getLink().replace("http://", "https://"));
-                }
-
-                //getAlbumInfo
-                jsonRoot = jsonRoot.get("album");
                 if (jsonRoot != null) {
-                    node = jsonRoot.get("id");
+                    JsonNode node = jsonRoot.get("id");
                     if (node != null) {
-                        res.setAlbumId(node.asText());
-                    }
+                        res.setId(node.asText());
+                    } else return null;
                     node = jsonRoot.get("name");
                     if (node != null) {
-                        res.setAlbumName(node.asText());
+                        res.setName(node.asText());
                     }
-                    node = jsonRoot.get("picUrl");
-                    if (node != null) {
-                        res.setPicUrl(node.asText());
+                    ArrayList<String> artists = new ArrayList<>();
+                    node = jsonRoot.get("artists");
+                    node.forEach((JsonNode son) -> {
+                        artists.add(son.get("name").asText());
+                    });
+                    res.setArtists(artists);
+
+                    //getLinkInfo
+                    res.setLink(null);
+                    if (otherJson != null && otherJson.get("data") != null && otherJson.get("data").get(0) != null && otherJson.get("data").get(0).get("url") != null) {
+                        res.setLink(otherJson.get("data").get(0).get("url").asText());
+                    } else {
+                        if (jsonRoot.get("hMusic") != null && jsonRoot.get("hMusic").get("dfsId") != null && jsonRoot.get("hMusic").get("dfsId").asInt() != 0) {
+                            res.setLink("https://p2.music.126.net/" + encrpyId(jsonRoot.get("hMusic").get("dfsId").asText()) + "/" + jsonRoot.get("hMusic").get("dfsId").asText() + ".mp3");
+                        } else if (jsonRoot.get("mMusic") != null && jsonRoot.get("mMusic").get("dfsId") != null && jsonRoot.get("mMusic").get("dfsId").asInt() != 0) {
+                            res.setLink("https://p2.music.126.net/" + encrpyId(jsonRoot.get("mMusic").get("dfsId").asText()) + "/" + jsonRoot.get("mMusic").get("dfsId").asText() + ".mp3");
+                        } else if (jsonRoot.get("bMusic") != null && jsonRoot.get("bMusic").get("dfsId") != null && jsonRoot.get("bMusic").get("dfsId").asInt() != 0) {
+                            res.setLink("https://p2.music.126.net/" + encrpyId(jsonRoot.get("bMusic").get("dfsId").asText()) + "/" + jsonRoot.get("bMusic").get("dfsId").asText() + ".mp3");
+                        } else if (jsonRoot.get("mp3Url") != null) {
+                            res.setLink(jsonRoot.get("mp3Url").asText().replace("http://m2", "http://p2"));
+                        }
                     }
-                }
-                if (res.getPicUrl() != null) {
-                    res.setPicUrl(res.getPicUrl().replace("http://", "https://"));
-                }
+                    if (res.getLink() != null) {
+                        res.setLink(res.getLink().replace("http://", "https://"));
+                    }
 
-                //getLyricsInfo
-                url = "https://music.163.com/api/song/media?id=" + id;
-                jsonRoot = curl(url, null, "netease", HttpMethod.GET);
-                if (jsonRoot != null && jsonRoot.get("lyric") != null) {
-                    res.setLyrics(jsonRoot.get("lyric").asText());
-                }
+                    //getAlbumInfo
+                    jsonRoot = jsonRoot.get("album");
+                    if (jsonRoot != null) {
+                        node = jsonRoot.get("id");
+                        if (node != null) {
+                            res.setAlbumId(node.asText());
+                        }
+                        node = jsonRoot.get("name");
+                        if (node != null) {
+                            res.setAlbumName(node.asText());
+                        }
+                        node = jsonRoot.get("picUrl");
+                        if (node != null) {
+                            res.setPicUrl(node.asText());
+                        }
+                    }
+                    if (res.getPicUrl() != null) {
+                        res.setPicUrl(res.getPicUrl().replace("http://", "https://"));
+                    }
 
-                //geTLyricsInfo
-                url = "https://music.163.com/api/song/lyric?tv=-1&id=" + id;
-                jsonRoot = curl(url, null, "netease", HttpMethod.GET);
-                if (jsonRoot != null && jsonRoot.get("tlyric") != null && jsonRoot.get("tlyric").get("lyric") != null) {
-                    res.setTranslations(jsonRoot.get("tlyric").get("lyric").asText());
+                    //getLyricsInfo
+                    url = "https://music.163.com/api/song/media?id=" + id;
+                    jsonRoot = curl(url, null, "netease", HttpMethod.GET);
+                    if (jsonRoot != null && jsonRoot.get("lyric") != null) {
+                        res.setLyrics(jsonRoot.get("lyric").asText());
+                    }
+
+                    //geTLyricsInfo
+                    url = "https://music.163.com/api/song/lyric?tv=-1&id=" + id;
+                    jsonRoot = curl(url, null, "netease", HttpMethod.GET);
+                    if (jsonRoot != null && jsonRoot.get("tlyric") != null && jsonRoot.get("tlyric").get("lyric") != null) {
+                        res.setTranslations(jsonRoot.get("tlyric").get("lyric").asText());
+                    }
+                    return res;
+                } else {
+                    res.setId(null);
+                    return res;
                 }
-                return res;
-            } else {
-                res.setId(null);
-                return res;
-            }
+            }else return null;
         } else return null;
     }
 
