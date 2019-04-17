@@ -4,6 +4,7 @@ import com.music.musicspring.entity.Fail;
 import com.music.musicspring.entity.FavorSong;
 import com.music.musicspring.entity.JsonResponse;
 import com.music.musicspring.service.IaddFavorService;
+import com.music.musicspring.service.IdeleteFavorService;
 import com.music.musicspring.service.IgetFavorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -21,6 +22,8 @@ public class SongController {
     private IaddFavorService addFavorService;
     @Autowired
     private IgetFavorService getFavorService;
+    @Autowired
+    private IdeleteFavorService deleteFavorService;
     @RequestMapping("/get_favor_song")
     @ResponseBody
     public JsonResponse getSong(@RequestParam("userId") String userId){
@@ -33,9 +36,23 @@ public class SongController {
     }
     @RequestMapping("/add_favor_song")
     @ResponseBody
-    public JsonResponse addSong(@RequestParam("site") String site, @RequestParam("userId") String userId, @RequestParam("id") String id,
+    public JsonResponse addSong(@RequestParam("userId") String userId,@RequestParam("site") String site,  @RequestParam("id") String id,
                                  @RequestParam("name") String name, @RequestParam("artists") String artists){
-        int code = addFavorService.addSong(site, userId, id, name, artists);
+        int code = addFavorService.addSong( userId, site,id, name, artists);
+        if(code == 1){
+            return new JsonResponse(true);
+        }else if(code == 0){
+            return new JsonResponse(false,new Fail(code,"输入了无效站点"));
+        }else if(code == -1){
+            return new JsonResponse(false,new Fail(code,"输入了无效ID"));
+        }else {
+            return new JsonResponse(false,new Fail(code,"服务器错误"));
+        }
+    }
+    @RequestMapping("/delete_favor_song")
+    @ResponseBody
+    public JsonResponse deleteSong(@RequestParam("userId") String userId,@RequestParam("site") String site,  @RequestParam("id") String id){
+        int code = deleteFavorService.deleteSong( userId, site,id);
         if(code == 1){
             return new JsonResponse(true);
         }else if(code == 0){

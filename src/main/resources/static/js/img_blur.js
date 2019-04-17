@@ -42,7 +42,7 @@ var ImgBlur = (function(GLI){
     }
     //console.log(calArr(3, 1.5));
     return {
-        blur : function(img, imgWidth, imgHeight, canvasWidth, canvasHeight, size, d){
+        blur : function(img, imgWidth, imgHeight, canvasWidth, canvasHeight, size, d, toWidth, toHeight){
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
             gl.viewport(0, 0, canvasWidth, canvasHeight);

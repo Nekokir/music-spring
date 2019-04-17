@@ -20,14 +20,16 @@ var player = (function(ImgBlur, Mobile){
 	
 	player_music.type = 'audio/mp3';
 
-	var songId = 0, singerId = 0, player_albumId = 0, cur_site = 'netease';
+	var songId = 0, singerId = 0, player_albumId = 0, cur_site = 'netease', cur_artists = '', cur_song_name = '';
 	var info_has_lyrics = false;
 
-	var click_like_song, click_player_singer, click_player_album;
+	var click_like_song, click_player_singer, click_player_album, click_del_song, check_cur_song_favor;
 
 	var cur_light_lrc_dom = null, lrc_time_list = null, cur_time_index = 0;
 
 	var mobile_is_info_show = true, mobile_rect_width = 0, mobile_rect_height = 0;
+
+	var has_song_play = false, is_cur_song_favor = false;
 	// Mobile
 	if(Mobile.isMobile()){
 		lrc_container.classList.add('hidden');
@@ -77,8 +79,7 @@ var player = (function(ImgBlur, Mobile){
 		blur.setAttribute('style', 'position: absolute; z-index: -1;');
 	
 		player_img.onload = function(){
-			if(cur_site === 'netease'){
-				console.log("netease! start blur");
+
                 if(Mobile.isMobile()){
                     ImgBlur.blur(player_img, player_img.naturalWidth, player_img.naturalHeight, mobile_rect_width, mobile_rect_height, 17, 70);
                 }else{
@@ -86,7 +87,7 @@ var player = (function(ImgBlur, Mobile){
                     console.log(rect);
                     ImgBlur.blur(player_img, player_img.naturalWidth, player_img.naturalHeight, rect.width, rect.height, 17, 70);
                 }
-			}
+
 
 			
 		}
@@ -222,7 +223,7 @@ var player = (function(ImgBlur, Mobile){
 		albumId,
 		id,
         lyrics = null,
-    }, site){
+    }, site, is_login){
 		let artistsStr = '';
         for(let artist of artists){
             artistsStr += artist + ',';
@@ -232,17 +233,42 @@ var player = (function(ImgBlur, Mobile){
         player_singer.innerHTML = 'artist: ' + artistsStr;
 
         cur_site = site;
+        cur_song_name = name;
+        cur_artists = artistsStr;
 
 		songId = id;
 		player_albumId = albumId;
 		player_name.innerHTML = name;
 
-		if(picUrl !== null){
+		if(has_song_play === false){
+			has_song_play = true;
+			if(is_login){
+                like.classList.remove('hidden');
+			}
+
+		}
+
+		if(picUrl !== null && picUrl !== ''){
 			if(site === 'netease'){
                 player_img.src = picUrl + "?param=200y200";
 			}else{
-                player_img.src = picUrl;
+				$.ajax({
+					url : 'pic?url=' + picUrl + '&site=' + site,
+                    datatype:"json",
+                    success : function (res) {
+						if(res.success === true){
+							player_img.setAttribute('src', 'data:image;base64,' + res.data);
+							//player_img.src = 'data:image/jpeg;base64,' + res.data;
+						}else{
+
+						}
+                    },
+					fail : function () {
+						alert("FUCK!");
+                    }
+				});
 			}
+
 
 		}else{
 			player_img.src = 'image/icon.png';
@@ -273,23 +299,59 @@ var player = (function(ImgBlur, Mobile){
 	}
 
 	like.onclick = function(){
-		click_like_song(songId);
-	}
+		if(!is_cur_song_favor){
+            click_like_song(songId, cur_site, cur_song_name, cur_artists);
+		}else{
+			click_del_song(songId, cur_site);
+		}
+	};
 	player_album.onclick = function(){
 		click_player_album(player_albumId);
-	}
+	};
 	player_singer.onclick = function(){
 		click_player_singer(singerId);
-	}
+	};
 
     return {
         play : play,
 		set : setMusic,
 		init : init,
-		setCallback : function(like_song, singer, album){
+		setCallback : function(like_song, singer, album, del_song, check){
 			click_like_song = like_song;
 			click_player_album = album;
 			click_player_singer = singer;
-		}
+			click_del_song = del_song;
+			check_cur_song_favor = check;
+		},
+		switchFavorIcon : function (isRed) {
+			is_cur_song_favor = isRed;
+			if(isRed){
+				like.innerHTML = 'favorite';
+			}else{
+                like.innerHTML = 'search';
+			}
+        },
+        displayFavor : function (display) {
+            if(display){
+				like.classList.remove('hidden');
+            }else{
+                like.classList.add('hidden');
+            }
+        },
+		checkFavor : function () {
+			if(has_song_play){
+                check_cur_song_favor(songId, cur_site);
+			}
+        },
+		hasSong : function () {
+			if(has_song_play){
+
+                console.log("has song");
+			}else{
+
+                console.log("no song");
+			}
+			return has_song_play;
+        }
     };
 })(ImgBlur, Mobile);

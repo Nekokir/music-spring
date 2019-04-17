@@ -19,7 +19,23 @@ var playlist = (function(){
         tabs = document.getElementById('search_tabs').getElementsByTagName('a');
 
     var PA_info_img = document.getElementById('show_info_img'),
-        PA_info_name = document.getElementById('show_info_name');
+        PA_info_name = document.getElementById('show_info_name'),
+        PA_favor = document.getElementById('show_favor'),
+        PA_show_type = '',
+        PA_click_favor_album = null,
+        PA_click_favor_playlist = null,
+        PA_del_album = null,
+        PA_del_playlist = null,
+        PA_check_al = null,
+        PA_check_pl = null,
+        PA_name = '',
+        PA_id = '',
+        PA_site = '',
+        PA_creator = '',
+        PA_artist = '',
+        PA_publishtime = '',
+        PA_size = 0,
+        PA_is_cur_favor = false;
 
     var lists = {};
     lists['song'] = song_list;
@@ -84,6 +100,9 @@ var playlist = (function(){
         }
         createLi(song_list, id, site, numberStr, songName, artistsStr, "music_note");
     }
+    function addFavorSongDOM(numberStr, songName, artists, id, site) {
+        createLi(show_list, id, site, numberStr, songName, artists, "music_note");
+    }
     function addShowDOM(numberStr, songName, artists, id, site){
         let artistsStr = '';
         for(let artist of artists){
@@ -109,7 +128,16 @@ var playlist = (function(){
         }else{
 
         }
-
+        if(type === '专辑'){
+            PA_show_type = 'album';
+            //PA_favor.classList.remove('hidden');
+        }else if(type === '歌单'){
+            PA_show_type = 'playlist';
+            //PA_favor.classList.remove('hidden');
+        }else{
+            PA_show_type = 'favor_song';
+            //PA_favor.classList.add('hidden');
+        }
         PA_info_name.innerHTML = '<span class=\'FPA-type\'>' + type + '</span>' + name;
     }
 
@@ -147,6 +175,24 @@ var playlist = (function(){
         var o = getObejctID(event.target);
         click_li_song(o.id, o.site);
     });
+
+    PA_favor.onclick = function () {
+        if(PA_show_type === 'album'){
+            if(!PA_is_cur_favor){
+                PA_click_favor_album(PA_id, PA_site, PA_name, PA_artist, PA_size, PA_publishtime);
+            }else {
+                PA_del_album(PA_id, PA_site);
+            }
+
+        }else{
+            if(!PA_is_cur_favor){
+                PA_click_favor_playlist(PA_id, PA_site, PA_name, PA_creator, PA_size);
+            }else {
+                PA_del_playlist(PA_id, PA_site);
+            }
+
+        }
+    };
 
     search_song_button.onclick = function(){
         click_s_song(document.getElementById('song').innerHTML, cur_origin);
@@ -200,7 +246,9 @@ var playlist = (function(){
 
     return {
         fill : function(shit, type, sub){
-            
+            if(shit.length === 1 && shit[0] === null){
+                return;
+            }
             switch(type){
                 //填充单曲的搜索结果
                 case 'song':
@@ -247,7 +295,7 @@ var playlist = (function(){
                     //let songs = shit.songs;
                     for(let i = 0; i < shit.length;){
                         let song = shit[i];
-                        addShowDOM(++i, song.name, song.artists, song.id, song.site);
+                        addFavorSongDOM(++i, song.name, song.artists, song.id, song.site);
                     }
                     break;
                 }
@@ -255,7 +303,16 @@ var playlist = (function(){
                 case 'show-album':{
                     this.clear('show');
                     fillShowInfo('专辑', shit.name, shit.picUrl, shit.artist, shit.publishTime);
+
                     let songs = shit.songs;
+
+                    PA_id = shit.id;
+                    PA_name = shit.name;
+                    PA_size = songs.length;
+                    PA_publishtime = shit.publishTime;
+                    PA_site = sub;
+                    PA_artist = shit.artist;
+
                     for(let i = 0; i < songs.length;){
                         let song = songs[i];
                         addShowDOM(++i, song.name, song.artists, song.id, sub);
@@ -267,6 +324,13 @@ var playlist = (function(){
                     this.clear('show');
                     fillShowInfo('歌单', shit.name, shit.picUrl, shit.creator, 0);
                     let songs = shit.songs;
+
+                     PA_id = shit.id;
+                     PA_name = shit.name;
+                     PA_size = songs.length;
+                     PA_site = sub;
+                     PA_creator = shit.creator;
+
                     for(let i = 0; i < songs.length;){
                         let song = songs[i];
                         addShowDOM(++i, song.name, song.artists, song.id, sub);
@@ -301,7 +365,12 @@ var playlist = (function(){
                 search_container.classList.add('hidden');
             }
         },
-        setCallback : function(list_song, list_album, list_playlist, s_song, s_album, s_playlist){
+        setCallback : function(list_song, list_album, list_playlist,
+                               s_song, s_album, s_playlist,
+                               favor_album, favor_playlist,
+                               del_album, del_playlist,
+                               check_al, check_pl
+        ){
             click_li_song = list_song;
             click_li_album = list_album;
             click_li_playlist = list_playlist;
@@ -309,12 +378,43 @@ var playlist = (function(){
             click_s_song = s_song;
             click_s_album = s_album;
             click_s_playlist = s_playlist;
+
+            PA_click_favor_album = favor_album;
+            PA_click_favor_playlist = favor_playlist;
+
+            PA_del_album = del_album;
+            PA_del_playlist = del_playlist;
+
+            PA_check_al = check_al;
+            PA_check_pl = check_pl;
         },
         hiddenSearch : function(){
             search_container.classList.add('search-top-hidden');
         },
         showSearch : function(){
             search_container.classList.remove('search-top-hidden');
+        },
+        switchFavorIcon : function (isRed) {
+           PA_is_cur_favor = isRed;
+            if(isRed){
+                PA_favor.innerHTML = '已收藏';
+            }else{
+                PA_favor.innerHTML = '收藏';
+            }
+        },
+        displayFavor : function (display) {
+            if(display){
+                PA_favor.classList.remove('hidden');
+            }else{
+                PA_favor.classList.add('hidden');
+            }
+        },
+        checkFavor : function () {
+            if(PA_show_type === 'album'){
+                PA_check_al(PA_id, PA_site);
+            }else if(PA_show_type === 'playlist'){
+                PA_check_pl(PA_id, PA_site);
+            }
         }
     };
 })();

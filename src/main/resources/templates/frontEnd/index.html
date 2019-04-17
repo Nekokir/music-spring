@@ -120,7 +120,7 @@
                                                     <div class="center music-sub-info">
                                                         <button id="player_singer" class="center mdl-button">歌手：SSSS</button>
                                                         <button id="player_album" class="center mdl-button">专辑：SSSS</button>
-                                                        <span><i id="player_like" class="material-icons">favorite</i></span>
+                                                        <span><i id="player_like" class="material-icons hidden">favorite</i></span>
                                                     </div>
                                             </div>
                                             <div id="lyrics_container" class="lyrics-container mdl-cell mdl-cell--8-col">
@@ -215,11 +215,12 @@
                                             </div>
                                             <div id="playlist_album_show_conatiner" class="hidden">
                                                 
-                                                <div class="">
+                                                <div class="show-sub-info">
                                                     
                                                     <img id="show_info_img" class="show-info-img">
                                                     <span id="show_info_name"></span>
                                                     <i id="show_to_search" class="material-icons">search</i>
+                                                    <button id="show_favor" class="mdl-button mdl-js-button mdl-button--raised hidden">收藏</button>
                                                 </div>
                                                 <ul id="playlist_album_show_list" class="demo-list-two mdl-list center">
                                                 </ul>
@@ -250,7 +251,7 @@
                 <h4 class="mdl-dialog__title">error</h4>
                 <div class="mdl-dialog__content">
                   <p>
-                    服务器除了问题
+                    出了问题
                   </p>
                 </div>
                 <div class="mdl-dialog__actions">

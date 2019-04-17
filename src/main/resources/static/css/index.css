@@ -192,3 +192,13 @@ color: rgba(0,0,0,.54);
     .material-icons{
         cursor: pointer;
     }
+    #show_favor{
+        position: absolute;
+        left: 120px;
+        padding: 1px 10px;
+        bottom: 5px;
+        font-size: 14px;
+    }
+    .show-sub-info{
+        position: relative;
+    }

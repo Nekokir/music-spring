@@ -34,7 +34,7 @@ var account = (function(){
             is_login_show = true;
 
         }
-    }
+    };
 
     reg_tab_button.onclick = function(){
         if(is_login_show){
@@ -48,7 +48,7 @@ var account = (function(){
             is_login_show = false;
 
         }
-    }
+    };
 
     login_button.onclick = function(){
         var username = log_username.value,
@@ -61,11 +61,11 @@ var account = (function(){
 
         }
         
-    }
+    };
 
     reg_button.onclick = function(){
-        var username = reg_username.nodeValue,
-            password = reg_password.nodeValue;
+        var username = reg_username.value,
+            password = reg_password.value;
             if(username !== '' && password !== ''){
                 if(fuck(username) && fuck(password)){
                     click_reg(username, password);
@@ -73,7 +73,7 @@ var account = (function(){
             }else{
     
             }
-    }
+    };
 
     return {
         show : function(){

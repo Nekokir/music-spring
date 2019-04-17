@@ -11,22 +11,6 @@ $(document).ready(function () {
             }
         }
     })
-    $.ajax({
-        "url":"http://localhost:1272/pic",
-        "data":{"site":"netease","url":"https://y.gtimg.cn/music/photo_new/T002R300x300M00000065p6e3LYi5Z.jpg"},
-        "method":"GET",
-        "cache":false,
-        "async":false,
-        datatype:"json",
-        success: function(data) {
-            console.log(data);
-            //将图片的Base64编码设置给src
-            $("#ImagePic").attr("src","data:image;base64,"+data.data);
-        },
-        error:function(data){
-            alert('响应失败！');
-        }
-    });
 });
 
 function login() {

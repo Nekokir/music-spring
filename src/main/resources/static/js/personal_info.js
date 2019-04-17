@@ -9,6 +9,7 @@ var personal_info = (function(){
         button_favor_album = document.getElementById('button_favor_album'),
         button_favor_playlist = document.getElementById('button_favor_playlist');
 
+    var cur_useId = '';
     
 
     function setFavorNum(song, album, playlist){
@@ -27,6 +28,7 @@ var personal_info = (function(){
         },
         set : function(name, favor_song, favor_album, favor_playlist){
             username.innerHTML = name;
+            cur_useId = name;
             setFavorNum(favor_song, favor_album, favor_playlist);
         },
         setCallback : function(favor_song, favor_album, favor_playlist, logout){
@@ -34,6 +36,9 @@ var personal_info = (function(){
             button_favor_song.onclick = favor_song;
             button_favor_album.onclick = favor_album;
             button_favor_playlist.onclick = favor_playlist;
+        },
+        useId : function () {
+            return cur_useId;
         }
     }
 })();
