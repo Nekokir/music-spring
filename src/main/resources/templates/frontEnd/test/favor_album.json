@@ -1,0 +1,25 @@
+{
+    "success":true,
+    "data":[
+        {
+            "id":"123",
+            "artist":"123",
+            "publishTime":"1999-06-19",
+            "name":"fuck",
+            "picUrl":"https://p1.music.126.net/KIG_lx5I_uUQclyGh3oH7w==/6620159511041904.jpg?param=200y200",
+            "size":12,
+            "songs":null,
+            "site" : "netease"
+        },
+        {
+            "id":"123",
+            "artist":"123",
+            "publishTime":"1999-06-19",
+            "name":"fuck",
+            "picUrl":"https://p1.music.126.net/KIG_lx5I_uUQclyGh3oH7w==/6620159511041904.jpg?param=200y200",
+            "size":12,
+            "songs":null,
+            "site" : "netease"
+        }
+    ]
+}

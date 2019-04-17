@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="mdl-js">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Search your favorite music.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <meta name="mobile-web-app-capable" content="yes">
+        <title>Music</title>
+
+        <link rel="shortcut icon" href="image/favicon.png">
+        <link rel="icon" sizes="192x192" href="image/icon.png">
+        <link rel="stylesheet" href="../static/css/material.min.css">
+        <link rel="stylesheet" href="../static/css/icon.css">
+        <link rel="stylesheet" href="../static/css/index.css">
+    </head>
+    <body>
+            
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+                    <header class="mdl-layout__header mdl-layout__header--scroll">
+                        <div class="mdl-layout__header-row">
+                            <span class="mdl-layout-title">Music</span>
+                        </div>
+                        <i id="button_switch_page" class="material-icons hidden">search</i>
+                    </header>
+                        <div class="mdl-layout__drawer">
+                 
+                            <nav class="mdl-layout__content mdl-navigation">
+                                <div id="log_container" class="">
+                                    <div class="mdl-card mdl-shadow--2dp center">
+                                            <div class="mdl-card__title mdl-card--expand">
+                                                <button id="login_tab_button" class="mdl-card__title-text mdl-button">登录</button>
+                                            </div>
+                                            <div id="login_form" class="log-show">
+                                                    <div class="mdl-card__supporting-text">
+                                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                                    <input class="mdl-textfield__input" type="text" id="log_username">
+                                                                    <label class="mdl-textfield__label" for="sample3">用户名...</label>
+                                                                  </div>
+                                                                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                                        <input class="mdl-textfield__input" type="text" id="log_password">
+                                                                        <label class="mdl-textfield__label" for="sample3">密码...</label>
+                                                                      </div>
+                                                    </div>
+                                                    <div class="mdl-card__actions mdl-card--border">
+                                                        <button id="log_button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                                            登录
+                                                        </button>
+                                                        <!--<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                                                忘记密码
+                                                            </a>-->
+                                                    </div>
+                                            </div>
+                                           
+                                    </div>
+                                    <div class="mdl-card mdl-shadow--2dp center nav-content">
+                                            <div class="mdl-card__title mdl-card--expand">
+                                                <button id="reg_tab_button" class="mdl-card__title-text mdl-button">注册</button>
+                                            </div>
+                                            <div id="reg_form" class="log-hidden">
+                                                    <div class="mdl-card__supporting-text">
+                                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                                    <input class="mdl-textfield__input" type="text" id="reg_username">
+                                                                    <label class="mdl-textfield__label" for="sample3">用户名...</label>
+                                                                  </div>
+                                                                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                                        <input class="mdl-textfield__input" type="text" id="reg_password">
+                                                                        <label class="mdl-textfield__label" for="sample3">密码...</label>
+                                                                      </div>
+                                                    </div>
+                                                    <div class="mdl-card__actions mdl-card--border">
+                                                        <button id="reg_button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                                            注册
+                                                        </button>
+                                                    </div>
+                                            </div>
+                                    </div>
+                                    
+                                </div>
+                                <div id="personal_info_container" class="log-hidden">
+                                    <div class="mdl-card mdl-shadow--2dp center">
+                                        <div class="mdl-card__title mdl-card--expand">
+                                            <h4 id="pi_username" class="mdl-card__title-text mdl-button">注册</h4>
+                                        </div>
+
+                                        <div class="mdl-card__supporting-text">
+                                                <ul class="demo-list-item mdl-list">
+                                                        <li id="button_favor_song" class="mdl-list__item">
+                                                                <i class="material-icons mdl-list__item-avatar mdl-badge mdl-badge--overlap" data-badge="0">music_note</i>
+                                                                <span>喜欢的音乐</span>
+                                                        </li>
+                                                        <li id="button_favor_album" class="mdl-list__item">
+                                                                <i class="material-icons mdl-list__item-avatar mdl-badge mdl-badge--overlap" data-badge="0">album</i>
+                                                                <span>喜欢的专辑</span>
+                                                        </li>
+                                                        <li id="button_favor_playlist" class="mdl-list__item">
+                                                                <i class="material-icons mdl-list__item-avatar mdl-badge mdl-badge--overlap" data-badge="0">list</i>
+                                                                <span>喜欢的歌单</span>
+                                                        </li>
+                                                    </ul>
+                                        
+                                        </div>
+                                        <div class="mdl-card__actions mdl-card--border">
+                                            <button id="logout" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                                注销
+                                            </button>
+                                        </div>
+                                            
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                        <main style="width: 100%" class="mdl-layout__content mdl-grid mdl-grid--no-spacing">
+                                <div class="mdl-cell mdl-cell--1-col"></div>
+                                <div id="target_player" class="mdl-cell mdl-cell--5-col shit-player">
+                                    <div id="main_player" class="center mdl-card mdl-shadow--2dp">
+                                        <div class="mdl-card__supporting-text  mdl-grid mdl-grid--no-spacing">
+                                            <div id="player_info" class="mdl-cell mdl-cell--4-col">
+                                                    <div id="player_name"></div>
+                                                    <img id="player_img" class="img center mdl-shadow--2dp" crossorigin="anonymous">
+                                                    <div class="center music-sub-info">
+                                                        <button id="player_singer" class="center mdl-button">歌手：SSSS</button>
+                                                        <button id="player_album" class="center mdl-button">专辑：SSSS</button>
+                                                        <span><i id="player_like" class="material-icons">favorite</i></span>
+                                                    </div>
+                                            </div>
+                                            <div id="lyrics_container" class="lyrics-container mdl-cell mdl-cell--8-col">
+                                                <ul id="lyrics_list">
+
+                                                </ul>
+                                            </div>
+                                            
+                                        </div>    
+                                  
+                                        <table class="mdl-card__actions player" id="player">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:5%">
+                                                        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-upgraded=",MaterialButton">
+                                                        <i class="material-icons" id="player_button">play_arrow</i>
+                                                        </button>
+                                                    </td>
+                                                    <td style="width:80%">
+                                                        <div class="mdl-slider__container"><input class="mdl-slider mdl-js-slider is-lowest-value is-upgraded" type="range" min="0" max="100" value="0" id="player_slider"><div class="mdl-slider__background-flex"><div class="mdl-slider__background-lower" style="flex: 0 1 0%;"></div><div class="mdl-slider__background-upper" style="flex: 1 1 0%;"></div></div></div>
+                                                    </td>
+                                                    <td style="width:10%">
+                                                        <span id="player_time">00:00</span>/<span id="total_time">00:00</span>
+                                                    </td>
+                                                    <td style="width:5%">
+                                                        <a href="https://m10.music.126.net/20190409024156/abd5c6f490aef22c4ef24fa929de5059/ymusic/df79/a8f9/e495/991e8e296d8a8d0e20e95f69e5cea338.mp3" download="ZOU+.mp3">
+                                                            <button class="player-td mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-upgraded=",MaterialButton">
+                                                                <i class="material-icons">file_download</i>
+                                                            </button>
+                                                        </a>
+                                                    </td>
+                                                
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                            
+                                    </div>
+                                </div>
+                                <div class="mdl-cell mdl-cell--1-col"></div>
+                                <div id="tagert_search" class="mdl-cell mdl-cell--4-col">
+                                    <div class="mdl-shadow--2dp" id="search_container">
+                                            <div id="search_tabs_container" class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                                                    <div id="search_tabs" class="mdl-tabs__tab-bar">
+                                                        <a href="#search-song" class="mdl-tabs__tab is-active">搜索歌曲</a>
+                                                        <a href="#search-album" class="mdl-tabs__tab">搜索专辑</a>
+                                                        <a href="#search-playlist" class="mdl-tabs__tab">搜索歌单</a>
+                                                        <div class="shit-tabs">
+                                                            <button id="demo-menu-lower-right" class="mdl-button mdl-js-button">
+                                                                网易云
+                                                            </button>
+                                                            <ul id="search_origin_option" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
+                                                                <li class="mdl-menu__item">网易云</li>
+                                                                <li class="mdl-menu__item">QQ音乐</li>
+                                                                <li class="mdl-menu__item">酷狗</li>
+                                                                <li class="mdl-menu__item">虾米</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mdl-tabs__panel  is-active" id="search-song">
+                                                            <form class="center">
+                                                              <div class="mdl-textfield mdl-js-textfield wide is-upgraded">
+                                                                  <input class="mdl-textfield__input" type="text" name="song" id="song">
+                                                                  <label class="mdl-textfield__label" for="song">请输入歌曲名或歌手名...</label>
+                                                                </div>
+                                                                <input id="search_song_button" class="hidden mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="歌曲搜索" data-upgraded=",MaterialButton"><br>
+                                                            </form>
+                                                            <ul id="search-list-song" class="demo-list-two mdl-list center">
+                                                            </ul>
+                                                    </div>
+                                                    <div class="mdl-tabs__panel" id="search-album">
+                                                            <form class="center">
+                                                              <div class="mdl-textfield mdl-js-textfield wide is-upgraded">
+                                                                  <input class="mdl-textfield__input" type="text" name="album" id="album">
+                                                                  <label class="mdl-textfield__label" for="album">请输入专辑名或专辑ID</label>
+                                                                </div>
+                                                                <input id="search_album_button" class="hidden mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="专辑搜索" data-upgraded=",MaterialButton"><br>
+                                                            </form>
+                                                            <ul id="search-list-album" class="demo-list-two mdl-list center">
+                                                                </ul>
+                                                    </div>
+                                                    <div class="mdl-tabs__panel" id="search-playlist">
+                                                            <form class="center">
+                                                              <div class="mdl-textfield mdl-js-textfield wide is-upgraded">
+                                                                  <input class="mdl-textfield__input" type="text" name="playlist" id="playlist">
+                                                                  <label class="mdl-textfield__label" for="playlist">请输入歌单名或歌单ID</label>
+                                                                </div>
+                                                                <input id="search_playlist_button" class="hidden mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="歌单搜索" data-upgraded=",MaterialButton"><br>
+                                                            </form>
+                                                            <ul id="search-list-playlist" class="demo-list-two mdl-list center">
+                                                                </ul>
+                                                    </div>
+                                            </div>
+                                            <div id="playlist_album_show_conatiner" class="hidden">
+                                                
+                                                <div class="">
+                                                    
+                                                    <img id="show_info_img" class="show-info-img">
+                                                    <span id="show_info_name"></span>
+                                                    <i id="show_to_search" class="material-icons">search</i>
+                                                </div>
+                                                <ul id="playlist_album_show_list" class="demo-list-two mdl-list center">
+                                                </ul>
+                                                
+                                                
+                                            </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="mdl-cell mdl-cell--1-col"></div>
+
+                                
+                        </main>
+                        <footer class="mdl-mini-footer">
+                                    <div class="mdl-mini-footer__left-section">
+                                        <ul class="mdl-mini-footer__link-list">
+                                        <li>Copyright &copy; 2017 <a href="https://whoisnian.com">nian</a> All Rights Reserved</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mdl-mini-footer__right-section">
+                                        <ul class="mdl-mini-footer__link-list">
+                                            <li><a href="https://github.com/whoisnian/music">https://github.com/whoisnian/music</a></li>
+                                        </ul>
+                                    </div>
+                                </footer>
+        </div>
+        <dialog id="dialog_server_wrong" class="mdl-dialog">
+                <h4 class="mdl-dialog__title">error</h4>
+                <div class="mdl-dialog__content">
+                  <p>
+                    服务器除了问题
+                  </p>
+                </div>
+                <div class="mdl-dialog__actions">
+                  <button type="button" class="mdl-button close">OK</button>
+                </div>
+        </dialog>
+    </body>
+    <script id="VS" type="x-shader">#version 300 es
+            out vec2 uv;
+            const float x[4] = float[4](-1.0, -1.0, 1.0, 1.0);
+            const float y[4] = float[4](1.0, -1.0, 1.0, -1.0);
+            void main(){
+                vec2 pos = vec2(x[gl_VertexID], y[gl_VertexID]);
+                uv = (pos + 1.0) / 2.0;
+                gl_Position = vec4(pos, 0.0, 1.0);
+            }
+    </script>
+    <script id="FS" type="x-shader">#version 300 es
+
+            precision highp float;
+            uniform sampler2D tex;
+            uniform float val[289];
+            uniform int size;
+            uniform vec2 imgSize;
+
+            in vec2 uv;
+            out vec4 oColor;
+        
+            void main(){
+                vec2 shit = 1.0 / imgSize;
+                
+                vec4 col;
+                for(int i = 0; i < size; i++){
+                    for(int j = 0; j < size; j++){
+                        col += texture(tex, uv + vec2(j - size/2, i - size/2) * shit) * val[i*size + j];
+                    }
+                }
+                oColor = vec4(col.xyz, 1.0) * 0.45;
+            }
+    </script>
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/mobile.js"></script>
+    <script src="../static/js/material.min.js"></script>
+    <script src="../static/js/playlist.js"></script>
+    <script src="../static/js/item.js"></script>
+    <script src="../static/js/img_blur.js"></script>
+    <script src="../static/js/lrcToJs.js"></script>
+    <script src="../static/js/player.js"></script>
+    <script src="../static/js/login.js"></script>
+    <script src="../static/js/personal_info.js"></script>
+    <script src="../static/js/md5.min.js"></script>
+    <script src="../static/js/Dialog.js"></script>
+    <script src="../static/js/index.js"></script>
+</html>
