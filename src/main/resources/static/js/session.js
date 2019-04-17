@@ -9,13 +9,26 @@ $(document).ready(function () {
             if(res != ""){
                 $("#username").text(res);
             }else if(res == ""){
-                alert("请重试");
                 window.location.href="/";
             }
         },
         error:function () {
-            alert("系统异常，请稍后重试！");
             window.location.href="/";
         }
     })
 });
+
+function logout() {
+    $.ajax({
+        "url":"http://localhost:1272/logout",
+        "method":"GET",
+        "cache":false,
+        "async":false,
+        success:function(res){
+            console.log(res);
+            if(res) {
+                window.location.href = "/";
+            }
+        }
+    })
+}

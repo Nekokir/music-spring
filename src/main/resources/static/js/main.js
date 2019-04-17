@@ -29,16 +29,19 @@ function login() {
         datatype:"json",
         success:function(res){
             console.log(res);
-            if(res == true){
+            if(res.success === true){
                 alert("登录成功");
                 window.location.href="/welcome";
-            }else if(res == false){
-                alert("密码错误或用户名不存在");
+            }else if(res.data.code == 0){
+                alert("密码错误");
+            }else if(res.data.code == -1){
+                alert("用户名不存在");
             }else{
-                alert("服务器正忙");
+                alert("服务器异常");
             }
         },
-        error:function () {
+        error:function (res) {
+            console.log(res);
             alert("系统异常，请稍后重试！");
         }
     });
