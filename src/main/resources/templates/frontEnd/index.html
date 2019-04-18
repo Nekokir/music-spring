@@ -8,7 +8,7 @@
         <title>Music</title>
 
         <link rel="shortcut icon" href="image/favicon.png">
-        <link rel="icon" sizes="192x192" href="image/icon.png">
+        <link rel="icon" sizes="192x192" href="../static/image/icon.png">
         <link rel="stylesheet" href="../static/css/material.min.css">
         <link rel="stylesheet" href="../static/css/icon.css">
         <link rel="stylesheet" href="../static/css/index.css">
@@ -37,8 +37,8 @@
                                                                     <label class="mdl-textfield__label" for="sample3">用户名...</label>
                                                                   </div>
                                                                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                                        <input class="mdl-textfield__input" type="text" id="log_password">
-                                                                        <label class="mdl-textfield__label" for="sample3">密码...</label>
+                                                                        <input class="mdl-textfield__input"  type="password" id="log_password">
+                                                                        <label class="mdl-textfield__label" for="sample3" >密码...</label>
                                                                       </div>
                                                     </div>
                                                     <div class="mdl-card__actions mdl-card--border">
@@ -63,7 +63,7 @@
                                                                     <label class="mdl-textfield__label" for="sample3">用户名...</label>
                                                                   </div>
                                                                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                                        <input class="mdl-textfield__input" type="text" id="reg_password">
+                                                                        <input class="mdl-textfield__input"  type="password" id="reg_password">
                                                                         <label class="mdl-textfield__label" for="sample3">密码...</label>
                                                                       </div>
                                                     </div>
@@ -140,7 +140,12 @@
                                                         </button>
                                                     </td>
                                                     <td style="width:80%">
-                                                        <div class="mdl-slider__container"><input class="mdl-slider mdl-js-slider is-lowest-value is-upgraded" type="range" min="0" max="100" value="0" id="player_slider"><div class="mdl-slider__background-flex"><div class="mdl-slider__background-lower" style="flex: 0 1 0%;"></div><div class="mdl-slider__background-upper" style="flex: 1 1 0%;"></div></div></div>
+                                                        <div class="mdl-slider__container player-slider-containr">
+                                                            <input class="mdl-slider mdl-js-slider is-lowest-value is-upgraded" type="range" min="0" max="100" value="0" id="player_slider">
+                                                            <div class="mdl-slider__background-flex"><div class="mdl-slider__background-lower" style="flex: 0 1 0%;"></div>
+                                                                <div class="mdl-slider__background-upper" style="flex: 1 1 0%;"></div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td style="width:10%">
                                                         <span id="player_time">00:00</span>/<span id="total_time">00:00</span>
@@ -248,7 +253,7 @@
                                 </footer>
         </div>
         <dialog id="dialog_server_wrong" class="mdl-dialog">
-                <h4 class="mdl-dialog__title">error</h4>
+                <h4 class="mdl-dialog__title"></h4>
                 <div class="mdl-dialog__content">
                   <p>
                     出了问题
@@ -289,7 +294,7 @@
                         col += texture(tex, uv + vec2(j - size/2, i - size/2) * shit) * val[i*size + j];
                     }
                 }
-                oColor = vec4(col.xyz, 1.0) * 0.45;
+                oColor = vec4(col.xyz, 1.0) * 0.4;
             }
     </script>
     <script src="../static/js/jquery-3.1.1.min.js"></script>

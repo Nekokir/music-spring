@@ -1,5 +1,6 @@
 var player = (function(ImgBlur, Mobile){
 	//var player_music = document.getElementById('player_music');
+	var defaultPicUrl = '../static/image/icon.png';
 	var player_music = document.createElement('audio'),
 		duration,
 		player_button = document.getElementById('player_button'),
@@ -20,7 +21,7 @@ var player = (function(ImgBlur, Mobile){
 	
 	player_music.type = 'audio/mp3';
 
-	var songId = 0, singerId = 0, player_albumId = 0, cur_site = 'netease', cur_artists = '', cur_song_name = '';
+	var songId = 0, singerId = 0, player_albumId = 0, cur_site = 'none', cur_artists = '', cur_song_name = '';
 	var info_has_lyrics = false;
 
 	var click_like_song, click_player_singer, click_player_album, click_del_song, check_cur_song_favor;
@@ -79,13 +80,13 @@ var player = (function(ImgBlur, Mobile){
 		blur.setAttribute('style', 'position: absolute; z-index: -1;');
 	
 		player_img.onload = function(){
-
+				var need = (cur_site !== 'netease');
                 if(Mobile.isMobile()){
-                    ImgBlur.blur(player_img, player_img.naturalWidth, player_img.naturalHeight, mobile_rect_width, mobile_rect_height, 17, 70);
+                    ImgBlur.blur(player_img, player_img.naturalWidth, player_img.naturalHeight, mobile_rect_width, mobile_rect_height, 17, 70, need, 200, 200);
                 }else{
                     var rect = rectDOM.getBoundingClientRect();
                     console.log(rect);
-                    ImgBlur.blur(player_img, player_img.naturalWidth, player_img.naturalHeight, rect.width, rect.height, 17, 70);
+                    ImgBlur.blur(player_img, player_img.naturalWidth, player_img.naturalHeight, rect.width, rect.height, 17, 70, need, 200, 200);
                 }
 
 
@@ -107,7 +108,9 @@ var player = (function(ImgBlur, Mobile){
 	    player_slider.addEventListener("click", function(event) {
 		    player_music.currentTime = duration * clickPercent(event);
 		    player_time.innerHTML = (Math.floor(player_music.currentTime / 60) < 10 ? '0' + Math.floor(player_music.currentTime / 60) : Math.floor(player_music.currentTime / 60)) + ':' + (Math.floor(player_music.currentTime % 60) < 10 ? '0' + Math.floor(player_music.currentTime % 60) : Math.floor(player_music.currentTime % 60));
-	    }, false);
+
+
+		}, false);
     }
 
 	function clickPercent(event) {
@@ -129,8 +132,28 @@ var player = (function(ImgBlur, Mobile){
 
 	function mouseUp(event) {
 		if (onslider == true) {
-			player_music.currentTime = duration * clickPercent(event);
+			var time = duration * clickPercent(event);
+			player_music.currentTime = time;
 			player_music.addEventListener('timeupdate', timeUpdate, false);
+
+			if(info_has_lyrics){
+                time = Math.floor(time * 1000);
+                var i = 0;
+                for(; i < lrc_time_list.length; i++){
+                	if(lrc_time_list[i].time > time){
+                		break;
+					}
+				}
+				i = (i === 0)?0:(i-1);
+                cur_light_lrc_dom.classList.remove('lrc-light');
+                cur_light_lrc_dom = lrc_time_list[i].dom;
+                cur_light_lrc_dom.classList.add('lrc-light');
+                var offset = lrc_container.getBoundingClientRect().height * 0.35 - (cur_light_lrc_dom.getBoundingClientRect().y - lrc_list.getBoundingClientRect().y);
+                lrc_list.style.transform = 'translateY(' + offset + 'px)';
+                cur_time_index = i;
+			}
+
+
 		}
 		onslider = false;
 	}
@@ -147,7 +170,7 @@ var player = (function(ImgBlur, Mobile){
 		}
 
 		let time = Math.floor(player_music.currentTime * 1000);
-		if(info_has_lyrics && cur_time_index < lrc_time_list.length){
+		if(info_has_lyrics && cur_time_index < lrc_time_list.length - 1){
 			
 			let cur_lrc_time = lrc_time_list[cur_time_index].time,
 				next_lrc_time = lrc_time_list[cur_time_index + 1].time;
@@ -182,14 +205,25 @@ var player = (function(ImgBlur, Mobile){
 		}
 	}
 
-	function fillLyricsList(tag, map, time_list){
+	function fillLyricsList(tag, map, time_list, transMap = null){
 		lrc_time_list = [];
 		lrc_list.innerHTML = '';
 		let first = true;
 		let index = 0;
+        let tstr = '';
 		for(let timeStr in map){
 			let li = document.createElement('li');
-			li.innerHTML = map[timeStr];
+			let str = map[timeStr];
+
+
+			if(transMap !== null){
+				tstr = transMap[timeStr];
+				if(tstr != null){
+                    str += '<br>' + tstr;
+                }
+
+			}
+            li.innerHTML = str;
 			lrc_list.appendChild(li);
 
 			lrc_time_list[index] = {
@@ -223,6 +257,7 @@ var player = (function(ImgBlur, Mobile){
 		albumId,
 		id,
         lyrics = null,
+        translations = null
     }, site, is_login){
 		let artistsStr = '';
         for(let artist of artists){
@@ -231,6 +266,8 @@ var player = (function(ImgBlur, Mobile){
         player_music.src = link;
         player_album.innerHTML = 'album: ' + albumName;
         player_singer.innerHTML = 'artist: ' + artistsStr;
+
+        player_button.innerHTML = "play_arrow";
 
         cur_site = site;
         cur_song_name = name;
@@ -271,7 +308,7 @@ var player = (function(ImgBlur, Mobile){
 
 
 		}else{
-			player_img.src = 'image/icon.png';
+			player_img.src = defaultPicUrl;
 		}
 		
 
@@ -279,8 +316,17 @@ var player = (function(ImgBlur, Mobile){
 			info_has_lyrics = true;
 			cur_light_lrc_dom = null;
 			
-			var ts = lrcToJs(lyrics).initLrc();
-			fillLyricsList(ts._tagField, ts._lrcFiled, ts._lrcOrder);
+			var ts = lrcToJs(lyrics).initLrc(),
+				ts2 = null;
+
+			if(translations !== null){
+                ts2 = lrcToJs(translations).initLrc();
+                fillLyricsList(ts._tagField, ts._lrcFiled, ts._lrcOrder, ts2._lrcFiled);
+			}else{
+                fillLyricsList(ts._tagField, ts._lrcFiled, ts._lrcOrder, null);
+			}
+
+
 			cur_time_index = 0;
 			
 		}else{
@@ -292,10 +338,10 @@ var player = (function(ImgBlur, Mobile){
     }
 
 	function init(){
-		player_album.innerHTML = 'album: none';
-		player_singer.innerHTML = 'artist: none';
-		player_name.innerHTML = 'none';
-		player_img.src = "image/icon.png";
+		player_album.innerHTML = 'album: 暂无';
+		player_singer.innerHTML = 'artist: 暂无';
+		player_name.innerHTML = '无播放的音乐';
+		player_img.src = defaultPicUrl;
 	}
 
 	like.onclick = function(){
@@ -306,10 +352,10 @@ var player = (function(ImgBlur, Mobile){
 		}
 	};
 	player_album.onclick = function(){
-		click_player_album(player_albumId);
+		click_player_album(player_albumId, cur_site);
 	};
 	player_singer.onclick = function(){
-		click_player_singer(singerId);
+		click_player_singer(singerId, cur_site);
 	};
 
     return {
@@ -328,7 +374,7 @@ var player = (function(ImgBlur, Mobile){
 			if(isRed){
 				like.innerHTML = 'favorite';
 			}else{
-                like.innerHTML = 'search';
+                like.innerHTML = 'favorite_border';
 			}
         },
         displayFavor : function (display) {

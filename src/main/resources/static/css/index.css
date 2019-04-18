@@ -202,3 +202,18 @@ color: rgba(0,0,0,.54);
     .show-sub-info{
         position: relative;
     }
+    .player-slider-containr{
+        width: 100%;
+    }
+    .mdl-slider__container{
+        width: 100%;
+    }
+
+::-webkit-scrollbar-thumb{
+    width: 8px;
+    background-color: #01579b;
+}
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}

@@ -17,6 +17,9 @@ var personal_info = (function(){
         favor[1].setAttribute('data-badge', album);
         favor[2].setAttribute('data-badge', playlist);
     }
+    function setFavorNumAt(num, index) {
+        favor[index].setAttribute('data-badge', num);
+    }
     return {
         show : function(){
             container.classList.remove('log-hidden');
@@ -29,7 +32,7 @@ var personal_info = (function(){
         set : function(name, favor_song, favor_album, favor_playlist){
             username.innerHTML = name;
             cur_useId = name;
-            setFavorNum(favor_song, favor_album, favor_playlist);
+            setFavorNum(0, 0, 0);
         },
         setCallback : function(favor_song, favor_album, favor_playlist, logout){
             button_logout.onclick = logout;
@@ -39,6 +42,9 @@ var personal_info = (function(){
         },
         useId : function () {
             return cur_useId;
+        },
+        setFavorNum : function (a, i) {
+            setFavorNumAt(a, i);
         }
     }
 })();

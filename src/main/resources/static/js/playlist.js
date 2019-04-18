@@ -35,7 +35,8 @@ var playlist = (function(){
         PA_artist = '',
         PA_publishtime = '',
         PA_size = 0,
-        PA_is_cur_favor = false;
+        PA_is_cur_favor = false,
+        PA_default_pic = '../static/image/icon.png';
 
     var lists = {};
     lists['song'] = song_list;
@@ -291,12 +292,18 @@ var playlist = (function(){
                 break;
                 case 'show':{
                     this.clear(type);
-                    fillShowInfo('like', "收藏的音乐", null, 0, 0);
+
                     //let songs = shit.songs;
-                    for(let i = 0; i < shit.length;){
-                        let song = shit[i];
-                        addFavorSongDOM(++i, song.name, song.artists, song.id, song.site);
+                    if(shit.length !== 0){
+                        for(let i = 0; i < shit.length;){
+                            let song = shit[i];
+                            addFavorSongDOM(++i, song.name, song.artists, song.id, song.site);
+                        }
+                        fillShowInfo('like', "收藏的音乐", PA_default_pic, 0, 0);
+                    }else{
+                        fillShowInfo('like', "收藏的音乐", PA_default_pic, 0, 0);
                     }
+
                     break;
                 }
                 //显示这个专辑的内容

@@ -1,7 +1,8 @@
 var ImgBlur = (function(GLI){
     var canvas = document.createElement('canvas'),
         gl = GLI.createGL(canvas);
-    
+    var canvas_for_change_size = document.createElement('canvas'),
+        ctx = canvas_for_change_size.getContext('2d');
     if(gl === null){
         return {
             glReady : false
@@ -42,13 +43,22 @@ var ImgBlur = (function(GLI){
     }
     //console.log(calArr(3, 1.5));
     return {
-        blur : function(img, imgWidth, imgHeight, canvasWidth, canvasHeight, size, d, toWidth, toHeight){
+        blur : function(img, imgWidth, imgHeight, canvasWidth, canvasHeight, size, d, need, toWidth, toHeight){
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
             gl.viewport(0, 0, canvasWidth, canvasHeight);
             //gl.useProgram(program);
             
-            var tex = GLI.createTex(gl, img, imgWidth, imgHeight);
+            var tex = null;
+            if(!need){
+                tex = GLI.createTex(gl, img, imgWidth, imgHeight);
+            }else{
+                canvas_for_change_size.width = toWidth;
+                canvas_for_change_size.height = toHeight;
+                ctx.drawImage(img, 0, 0, toWidth, toHeight);
+                tex = GLI.createTex(gl, canvas_for_change_size, toWidth, toHeight);
+            }
+
             gl.uniform1i(texLocation, 0);
 
             // cal
