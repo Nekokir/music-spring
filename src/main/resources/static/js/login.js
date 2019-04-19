@@ -55,7 +55,7 @@ var account = (function(){
             password = log_password.value;
         if(username !== '' && password !== ''){
             if(fuck(username) && fuck(password)){
-                click_login(username, password);
+                click_login(username.replace(/\+/g,"%2B").replace(/\&/g,"%26"), password.replace(/\+/g,"%2B").replace(/\&/g,"%26"));
             }
         }else{
 
@@ -68,7 +68,7 @@ var account = (function(){
             password = reg_password.value;
             if(username !== '' && password !== ''){
                 if(fuck(username) && fuck(password)){
-                    click_reg(username, password);
+                    click_reg(username.replace(/\+/g,"%2B").replace(/\&/g,"%26"), password.replace(/\+/g,"%2B").replace(/\&/g,"%26"));
                 }
             }else{
     

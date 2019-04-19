@@ -45,6 +45,7 @@ public class LoginController {
     String userSession(HttpServletRequest request,HttpSession httpSession){
         HttpSession session = request.getSession();
         String username = (String)httpSession.getAttribute("userID");
+
         return username;
     }
     @RequestMapping("/logout")

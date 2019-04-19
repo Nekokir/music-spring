@@ -217,3 +217,7 @@ color: rgba(0,0,0,.54);
     width: 8px;
     background-color: #F5F5F5;
 }
+    .text-ellipsis{
+        text-overflow: ellipsis;
+        max-width: 65%;
+    }

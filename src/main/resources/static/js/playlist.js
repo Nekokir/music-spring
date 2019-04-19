@@ -36,7 +36,8 @@ var playlist = (function(){
         PA_publishtime = '',
         PA_size = 0,
         PA_is_cur_favor = false,
-        PA_default_pic = '../static/image/icon.png';
+        PA_default_pic = '../static/image/icon.png',
+        PA_is_favor_enable = true;
 
     var lists = {};
     lists['song'] = song_list;
@@ -67,6 +68,7 @@ var playlist = (function(){
         number.innerHTML = numberStr;
 
         up.classList.add("maxlen");
+        up.classList.add('text-ellipsis');
         up.innerHTML = upStr;
 
         bottom.classList.add("mdl-list__item-sub-title");
@@ -178,21 +180,24 @@ var playlist = (function(){
     });
 
     PA_favor.onclick = function () {
-        if(PA_show_type === 'album'){
-            if(!PA_is_cur_favor){
-                PA_click_favor_album(PA_id, PA_site, PA_name, PA_artist, PA_size, PA_publishtime);
-            }else {
-                PA_del_album(PA_id, PA_site);
-            }
+        if(PA_is_favor_enable){
+            if(PA_show_type === 'album'){
+                if(!PA_is_cur_favor){
+                    PA_click_favor_album(PA_id, PA_site, PA_name, PA_artist, PA_size, PA_publishtime);
+                }else {
+                    PA_del_album(PA_id, PA_site);
+                }
 
-        }else{
-            if(!PA_is_cur_favor){
-                PA_click_favor_playlist(PA_id, PA_site, PA_name, PA_creator, PA_size);
-            }else {
-                PA_del_playlist(PA_id, PA_site);
-            }
+            }else{
+                if(!PA_is_cur_favor){
+                    PA_click_favor_playlist(PA_id, PA_site, PA_name, PA_creator, PA_size);
+                }else {
+                    PA_del_playlist(PA_id, PA_site);
+                }
 
+            }
         }
+
     };
 
     search_song_button.onclick = function(){
@@ -212,19 +217,19 @@ var playlist = (function(){
     search_song_input.onkeydown = function(event){
         var val = search_song_input.value;
         if(event.keyCode === 13 && val !== ''){
-            click_s_song(val, cur_origin);
+            click_s_song(val.replace(/\+/g,"%2B").replace(/\&/g,"%26"), cur_origin);
         }
     };
     search_album_input.onkeydown = function(event){
         var val = search_album_input.value;
         if(event.keyCode === 13 && val !== ''){
-            click_s_album(val, cur_origin);
+            click_s_album(val.replace(/\+/g,"%2B").replace(/\&/g,"%26"), cur_origin);
         }
     };
     search_playlist_input.onkeydown = function(event){
         var val = search_playlist_input.value;
         if(event.keyCode === 13 && val !== ''){
-            click_s_playlist(val, cur_origin);
+            click_s_playlist(val.replace(/\+/g,"%2B").replace(/\&/g,"%26"), cur_origin);
         }
     };
 
@@ -309,14 +314,14 @@ var playlist = (function(){
                 //显示这个专辑的内容
                 case 'show-album':{
                     this.clear('show');
-                    fillShowInfo('专辑', shit.name, shit.picUrl, shit.artist, shit.publishTime);
+                    fillShowInfo('专辑', shit.name, shit.picUrl, shit.artist, shit.publishtime);
 
                     let songs = shit.songs;
 
                     PA_id = shit.id;
                     PA_name = shit.name;
                     PA_size = songs.length;
-                    PA_publishtime = shit.publishTime;
+                    PA_publishtime = shit.publishtime;
                     PA_site = sub;
                     PA_artist = shit.artist;
 
@@ -422,6 +427,9 @@ var playlist = (function(){
             }else if(PA_show_type === 'playlist'){
                 PA_check_pl(PA_id, PA_site);
             }
+        },
+        favorEnable : function (able) {
+            PA_is_favor_enable = able;
         }
     };
 })();

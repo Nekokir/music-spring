@@ -30,7 +30,7 @@ var player = (function(ImgBlur, Mobile){
 
 	var mobile_is_info_show = true, mobile_rect_width = 0, mobile_rect_height = 0;
 
-	var has_song_play = false, is_cur_song_favor = false;
+	var has_song_play = false, is_cur_song_favor = false, is_favor_able = true;
 	// Mobile
 	if(Mobile.isMobile()){
 		lrc_container.classList.add('hidden');
@@ -310,8 +310,8 @@ var player = (function(ImgBlur, Mobile){
 		}else{
 			player_img.src = defaultPicUrl;
 		}
-		
 
+        lrc_list.innerHTML = '';
 		if(lyrics !== null){
 			info_has_lyrics = true;
 			cur_light_lrc_dom = null;
@@ -332,7 +332,7 @@ var player = (function(ImgBlur, Mobile){
 		}else{
 			info_has_lyrics = false;
 			cur_light_lrc_dom = null;
-			lrc_list.innerHTML = '';
+			//lrc_list.innerHTML = '';
 			//lrc_time_map = null;
 		}
     }
@@ -345,11 +345,14 @@ var player = (function(ImgBlur, Mobile){
 	}
 
 	like.onclick = function(){
-		if(!is_cur_song_favor){
-            click_like_song(songId, cur_site, cur_song_name, cur_artists);
-		}else{
-			click_del_song(songId, cur_site);
+		if(is_favor_able){
+            if(!is_cur_song_favor){
+                click_like_song(songId, cur_site, cur_song_name, cur_artists);
+            }else{
+                click_del_song(songId, cur_site);
+            }
 		}
+
 	};
 	player_album.onclick = function(){
 		click_player_album(player_albumId, cur_site);
@@ -398,6 +401,9 @@ var player = (function(ImgBlur, Mobile){
                 console.log("no song");
 			}
 			return has_song_play;
+        },
+		favorEnable : function (able) {
+			is_favor_able = able;
         }
     };
 })(ImgBlur, Mobile);

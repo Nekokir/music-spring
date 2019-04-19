@@ -1,146 +1,213 @@
-var shit = (function(player, playlist, account, personal_info, Mobile){
-    var test = false;
-    var url = {
-        add_favor_song : 'add_favor_song',
-        add_favor_album : 'add_favor_album',
-        add_favor_playlist : 'add_favor_playlist',
-        get_favor_song : 'add_favor_song',
-        get_favor_album : 'add_favor_album',
-        get_favor_playlist : 'add_favor_playlist',
-        logout : 'test/logout.json',
-        login : 'test/login.json',
-        reg : 'test/login.json',
-        songById : 'test/song.json',
-        songByName : 'test/song.json',
-        album : 'test/album.json',
-        playlist : 'test/playlist.json',
-        like_song : '',
-        search_song : 'test/search_song.json',
-        search_album : 'test/search_album.json',
-        search_playlist : 'test/search_pl.json'
-    };
-    if(!test){
-        url = {
-            add_favor_song : 'add_favor_song',
-            add_favor_album : 'add_favor_album',
-            add_favor_playlist : 'add_favor_playlist',
-            get_favor_song : 'get_favor_song',
-            get_favor_album : 'get_favor_album',
-            get_favor_playlist : 'get_favor_playlist',
-            del_song : 'delete_favor_song',
-            del_al : 'delete_favor_album',
-            del_pl : 'delete_favor_playlist',
-            logout : 'logout',
-            login : 'login',
-            reg : 'reg',
-            songById : 'song',
-            songByName : '',
-            album : 'album',
-            playlist : 'playlist',
-            like_song : 'add_favor',
-            search_song : 'search_song',
-            search_album : 'search_album',
-            search_playlist : 'search_playlist'
-        };
-    }
+var url = {
+    add_favor_song : 'add_favor_song',
+    add_favor_album : 'add_favor_album',
+    add_favor_playlist : 'add_favor_playlist',
+    get_favor_song : 'get_favor_song',
+    get_favor_album : 'get_favor_album',
+    get_favor_playlist : 'get_favor_playlist',
+    del_song : 'delete_favor_song',
+    del_al : 'delete_favor_album',
+    del_pl : 'delete_favor_playlist',
+    logout : 'logout',
+    login : 'login',
+    reg : 'reg',
+    songById : 'song',
+    album : 'album',
+    playlist : 'playlist',
+    like_song : 'add_favor',
+    search_song : 'search_song',
+    search_album : 'search_album',
+    search_playlist : 'search_playlist',
+    session : 'userSession'
+};
 
-    // mobile
-    var playerDOM = document.getElementsByClassName('shit-player')[0],
-        searchDOM = document.getElementById('search_container').parentNode,
-        button_switch_page = document.getElementById('button_switch_page'),
-        is_player_show = true;
-    if(Mobile.isMobile()){
-        document.getElementsByTagName('footer')[0].classList.add('hidden');
-        button_switch_page.classList.remove('hidden');
+// mobile
+var playerDOM = document.getElementsByClassName('shit-player')[0],
+    searchDOM = document.getElementById('search_container').parentNode,
+    button_switch_page = document.getElementById('button_switch_page'),
+    is_player_show = true;
+if(Mobile.isMobile()){
+    document.getElementsByTagName('footer')[0].classList.add('hidden');
+    button_switch_page.classList.remove('hidden');
 
-        //searchDOM.classList.add('switch-search');
+    //searchDOM.classList.add('switch-search');
 
-        //switch
-        searchDOM.classList.add('hidden');
-        button_switch_page.onclick = function(){
-            if(is_player_show){
-                button_switch_page.innerHTML = 'keyboard_return';
-                searchDOM.classList.remove('hidden');
-                playerDOM.classList.add('hidden');
-                is_player_show = false;
-            }else{
-                button_switch_page.innerHTML = 'search';
-                searchDOM.classList.add('hidden');
-                playerDOM.classList.remove('hidden');
-                is_player_show = true;
-            }
-        }
-    }
-    /*var playerDOM = document.getElementsByClassName('shit-player')[0],
-        searchDOM = document.getElementById('search_container').parentNode,
-        button_switch_page = document.getElementById('button_switch_page'),
-        is_player_show = true;
-    if(Mobile.isMobile()){
-        document.getElementsByTagName('footer')[0].classList.add('hidden');
-        button_switch_page.classList.remove('hidden');
-
-        //searchDOM.classList.add('hidden');
-        button_switch_page.onclick = function(){
-            if(is_player_show){
-                button_switch_page.setAttribute('href', '#target_player');
-                is_player_show = false;
-            }else{
-                button_switch_page.setAttribute('href', '#target_search');
-                is_player_show = true;
-            }
-        }
-    }*/
-    function handle_connection_fail(res){
-        Dialog.normal('网络连接有些问题....');
-    }
-    function handle_server_wrong(data){
-        if('code' in data){
-            if(data.code === -2){
-                Dialog.normal('服务器出了些问题....');
-                return false;
-            }
+    //switch
+    searchDOM.classList.add('hidden');
+    button_switch_page.onclick = function(){
+        if(is_player_show){
+            button_switch_page.innerHTML = 'keyboard_return';
+            searchDOM.classList.remove('hidden');
+            playerDOM.classList.add('hidden');
+            is_player_show = false;
         }else{
-            Dialog.normal('发生了蜜汁错误....');
+            button_switch_page.innerHTML = 'search';
+            searchDOM.classList.add('hidden');
+            playerDOM.classList.remove('hidden');
+            is_player_show = true;
         }
+    }
+}
+/*var playerDOM = document.getElementsByClassName('shit-player')[0],
+ searchDOM = document.getElementById('search_container').parentNode,
+ button_switch_page = document.getElementById('button_switch_page'),
+ is_player_show = true;
+ if(Mobile.isMobile()){
+ document.getElementsByTagName('footer')[0].classList.add('hidden');
+ button_switch_page.classList.remove('hidden');
 
-        return true;
+ //searchDOM.classList.add('hidden');
+ button_switch_page.onclick = function(){
+ if(is_player_show){
+ button_switch_page.setAttribute('href', '#target_player');
+ is_player_show = false;
+ }else{
+ button_switch_page.setAttribute('href', '#target_search');
+ is_player_show = true;
+ }
+ }
+ }*/
+function handle_connection_fail(res){
+    Dialog.normal('网络连接有些问题....');
+}
+function handle_server_wrong(data){
+    if('code' in data){
+        if(data.code === -2){
+            Dialog.normal('服务器出了些问题....');
+            return false;
+        }
+    }else{
+        Dialog.normal('发生了蜜汁错误....');
     }
 
-    var is_login = false;
+    return true;
+}
 
-    function isCurSongFavor(urlStr, id, site, userId, func) {
-        $.ajax({
-            url : urlStr + '?userId=' + userId,
-            success : function (res) {
-                if(res.success === true){
-                    var list = res.data,
-                        has = false;
-                    console.log(id + ' ' + site);
-                    for(var i = 0; i < list.length; i++){
+var is_login = false;
+player.init();
+player.displayFavor(false);
+playlist.displayFavor(false);
+function isCurSongFavor(urlStr, id, site, userId, func) {
+    $.ajax({
+        url : urlStr + '?userId=' + userId,
+        success : function (res) {
+            if(res.success === true){
+                var list = res.data,
+                    has = false;
+                console.log(id + ' ' + site);
+                for(var i = 0; i < list.length; i++){
+                    console.log(list[i]);
+                    if(list[i].id === id && list[i].site === site){
+                        has = true;
+                        console.log('find');
                         console.log(list[i]);
-                        if(list[i].id === id && list[i].site === site){
-                            has = true;
-                            console.log('find');
-                            console.log(list[i]);
-                            break;
-                        }
+                        break;
                     }
-                    func(has);
-                }else if(handle_server_wrong(res.data)){
-
                 }
-            },
-            error : handle_connection_fail
-        });
-    }
+                func(has);
+            }else if(handle_server_wrong(res.data)){
 
-    player.init();
-    player.displayFavor(false);
-    playlist.displayFavor(false);
+            }
+        },
+        error : handle_connection_fail,
+        complete : function () {
+            player.favorEnable(true);
+        }
+    });
+}
+function lrSuccess(username) {
+    account.hidden();
+    personal_info.show();
+    personal_info.set(username, 20, 3, 5);
+    playlist.displayFavor(true);
+    //player.displayFavor(true);
+    if(player.hasSong()){
+        player.displayFavor(true);
+        player.checkFavor();
+    }
+    playlist.checkFavor();
+    is_login = true;
+
+    $.ajax({
+        url : url.get_favor_song + '?userId=' + username,
+        success : function(res){
+            if(res.success === true){
+                personal_info.setFavorNum(res.data.length, 0);
+                if(res.data.length > 0 && res.data[0] !== null && !(player.hasSong())){
+                    var song = res.data[0],
+                        id = song.id,
+                        site = song.site;
+                    $.ajax({
+                        url : url.songById + '?id=' + id + '&site=' + site,
+                        success : function(res){
+                            if(res.success === true){
+                                player.set(res.data, site, is_login);
+                                if(Mobile.isMobile()){
+                                    button_switch_page.click();
+                                }
+                                if(is_login){
+                                    isCurSongFavor(url.get_favor_song, id, site, personal_info.useId(), function (has) {
+                                        player.switchFavorIcon(has);
+                                    });
+                                }
+
+
+                            }else if(handle_server_wrong(res.data)){
+                                if('reason' in res.data){
+
+                                }else{
+                                    if(res.data.link === null){
+                                        //版权
+                                        Dialog.normal('这首歌有版权, 不能播放...');
+                                    }
+                                }
+                            }
+                        },
+                        error : handle_connection_fail
+                    });
+                }
+
+            }
+        },
+        error : handle_connection_fail
+    });
+    $.ajax({
+        url : url.get_favor_album + '?userId=' + username,
+        success : function(res){
+            if(res.success === true){
+                personal_info.setFavorNum(res.data.length, 1);
+            }
+        },
+        error : handle_connection_fail
+    });
+    $.ajax({
+        url : url.get_favor_playlist + '?userId=' + username,
+        success : function(res){
+            if(res.success === true){
+                personal_info.setFavorNum(res.data.length, 2);
+            }
+        },
+        error : handle_connection_fail
+    });
+
+}
+function refreshFavorNum(url, i) {
+    $.ajax({
+        url : url + '?userId=' + personal_info.useId(),
+        success : function (res) {
+            if(res.success === true){
+                personal_info.setFavorNum(res.data.length, i);
+            }
+        }
+    });
+}
+function init(){
+
 
     player.setCallback(
         function(id, site, name, artists){
             if(is_login){
+                player.favorEnable(false);
                 $.ajax({
                     url : url.add_favor_song + '?id=' + id + '&site=' + site + '&userId=' + personal_info.useId() + '&name=' + name + '&artists=' + artists,
                     success : function(res){
@@ -153,7 +220,11 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                             }
                         }
                     },
-                    error : handle_connection_fail
+                    error : handle_connection_fail,
+                    complete : function () {
+                        player.favorEnable(true);
+                        refreshFavorNum(url.get_favor_song, 0);
+                    }
                 });
             }else{
                 Dialog.normal("还未登录");
@@ -163,19 +234,19 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
         },
         function(id, site){
             /*$.ajax({
-                url : url.album + '?id=' + id + '&site=' + site,
-                success : function(res){
-                    if(res.success === true){
-                        playlist.jump('jump');
-                        playlist.fill(res.data, 'show-album');
-                    }else if(handle_server_wrong(res.data)){
-                        if('reason' in res.data){
+             url : url.album + '?id=' + id + '&site=' + site,
+             success : function(res){
+             if(res.success === true){
+             playlist.jump('jump');
+             playlist.fill(res.data, 'show-album');
+             }else if(handle_server_wrong(res.data)){
+             if('reason' in res.data){
 
-                        }
-                    }
-                },
-                error : handle_connection_fail
-            });*/
+             }
+             }
+             },
+             error : handle_connection_fail
+             });*/
             //playlist.hiddenSearch();
         },
         function(id, site){
@@ -203,6 +274,7 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
         },
         function (id, site) {
             if(is_login){
+                player.favorEnable(false);
                 $.ajax({
                     url : url.del_song + '?site=' + site + '&id=' + id + '&userId=' + personal_info.useId(),
                     success : function(res){
@@ -215,14 +287,20 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                             }
                         }
                     },
-                    error : handle_connection_fail
+                    error : handle_connection_fail,
+                    complete : function () {
+                        player.favorEnable(true);
+                        refreshFavorNum(url.get_favor_song, 0);
+                    }
 
                 });
             }
         },
         function (id, site) {
+            player.favorEnable(false);
             isCurSongFavor(url.get_favor_song, id, site, personal_info.useId(), function (has) {
                 player.switchFavorIcon(has);
+                player.favorEnable(true);
             });
         }
     );
@@ -244,7 +322,7 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                             });
                         }
 
-                       
+
                     }else if(handle_server_wrong(res.data)){
                         if('reason' in res.data){
 
@@ -320,7 +398,7 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                     }
                 },
                 error : handle_connection_fail
-                
+
             });
         },
         function(name, origin){
@@ -336,7 +414,7 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                     }
                 },
                 error : handle_connection_fail
-                
+
             });
         },
         function(name, origin){
@@ -352,11 +430,12 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                     }
                 },
                 error : handle_connection_fail
-                
+
             });
         },
         function (id, site, name, artist, size, publishtime) {
             if(is_login){
+                playlist.favorEnable(false);
                 $.ajax({
                     url : url.add_favor_album + '?name=' + name + '&site=' + site + '&id=' + id + '&artist='
                     + artist + '&size=' + size + '&userId=' + personal_info.useId()
@@ -371,13 +450,19 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                             }
                         }
                     },
-                    error : handle_connection_fail
+                    error : handle_connection_fail,
+                    complete : function () {
+                        playlist.favorEnable(true);
+                        refreshFavorNum(url.get_favor_album, 1);
+                    }
+
 
                 });
             }
         },
         function (id, site, name, creator, size, publishtime) {
             if(is_login){
+                playlist.favorEnable(false);
                 $.ajax({
                     url : url.add_favor_playlist + '?name=' + name
                     + '&site=' + site + '&id=' + id + '&creator=' + creator + '&size=' + size
@@ -392,13 +477,18 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                             }
                         }
                     },
-                    error : handle_connection_fail
+                    error : handle_connection_fail,
+                    complete : function () {
+                        playlist.favorEnable(true);
+                        refreshFavorNum(url.get_favor_playlist, 2);
+                    }
 
                 });
             }
         },
         function (id, site) {
             if(is_login){
+                playlist.favorEnable(false);
                 $.ajax({
                     url : url.del_al + '?site=' + site + '&id=' + id + '&userId=' + personal_info.useId(),
                     success : function(res){
@@ -411,13 +501,18 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                             }
                         }
                     },
-                    error : handle_connection_fail
+                    error : handle_connection_fail,
+                    complete : function () {
+                        playlist.favorEnable(true);
+                        refreshFavorNum(url.get_favor_album, 1);
+                    }
 
                 });
             }
         },
         function (id, site) {
             if(is_login){
+                playlist.favorEnable(false);
                 $.ajax({
                     url : url.del_pl + '?site=' + site + '&id=' + id + '&userId=' + personal_info.useId(),
                     success : function(res){
@@ -430,107 +525,41 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                             }
                         }
                     },
-                    error : handle_connection_fail
+                    error : handle_connection_fail,
+                    complete : function () {
+                        playlist.favorEnable(true);
+                        refreshFavorNum(url.get_favor_playlist, 2);
+                    }
 
                 });
             }
         },
         function (id, site) {
+            playlist.favorEnable(false);
             isCurSongFavor(url.get_favor_album, id, site, personal_info.useId(), function (has) {
                 playlist.switchFavorIcon(has);
+                playlist.favorEnable(true);
             });
         },
         function (id, site) {
+            playlist.favorEnable(false);
             isCurSongFavor(url.get_favor_playlist, id, site, personal_info.useId(), function (has) {
                 playlist.switchFavorIcon(has);
+                playlist.favorEnable(true);
             });
         }
     );
-    function lrSuccess(res, username, password) {
-        if(res.success === true){
-            account.hidden();
-            personal_info.show();
-            personal_info.set(username, 20, 3, 5);
-            playlist.displayFavor(true);
-            //player.displayFavor(true);
-            if(player.hasSong()){
-                player.displayFavor(true);
-                player.checkFavor();
-            }
-            playlist.checkFavor();
-            is_login = true;
 
-            $.ajax({
-                url : url.get_favor_song + '?userId=' + username,
-                success : function(res){
-                    if(res.success === true){
-                        personal_info.setFavorNum(res.data.length, 0);
-                        if(res.data.length > 0 && res.data[0] !== null && !(player.hasSong())){
-                            var song = res.data[0],
-                                id = song.id,
-                                site = song.site;
-                            $.ajax({
-                                url : url.songById + '?id=' + id + '&site=' + site,
-                                success : function(res){
-                                    if(res.success === true){
-                                        player.set(res.data, site, is_login);
-                                        if(Mobile.isMobile()){
-                                            button_switch_page.click();
-                                        }
-                                        if(is_login){
-                                            isCurSongFavor(url.get_favor_song, id, site, personal_info.useId(), function (has) {
-                                                player.switchFavorIcon(has);
-                                            });
-                                        }
-
-
-                                    }else if(handle_server_wrong(res.data)){
-                                        if('reason' in res.data){
-
-                                        }else{
-                                            if(res.data.link === null){
-                                                //版权
-                                                Dialog.normal('这首歌有版权, 不能播放...');
-                                            }
-                                        }
-                                    }
-                                },
-                                error : handle_connection_fail
-                            });
-                        }
-
-                    }
-                },
-                error : handle_connection_fail
-            });
-            $.ajax({
-                url : url.get_favor_album + '?userId=' + username,
-                success : function(res){
-                    if(res.success === true){
-                        personal_info.setFavorNum(res.data.length, 1);
-                    }
-                },
-                error : handle_connection_fail
-            });
-            $.ajax({
-                url : url.get_favor_playlist + '?userId=' + username,
-                success : function(res){
-                    if(res.success === true){
-                        personal_info.setFavorNum(res.data.length, 2);
-                    }
-                },
-                error : handle_connection_fail
-            });
-        }else{
-            Dialog.normal(res.data.reason);
-        }
-    }
     account.setCallback(
         function(username, password){
             $.ajax({
                 url : url.login + '?userId=' + username + '&loginPwd=' + md5(password),
                 success : function(res){
-                    lrSuccess(res, username, password);
+                    if(res.success === true){
+                        lrSuccess(username);
+                    }else{
+                        Dialog.normal(res.data.reason);
+                    }
                 },
                 error : handle_connection_fail
             });
@@ -539,15 +568,17 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
             $.ajax({
                 url : url.reg + '?userId=' + username + '&loginPwd=' + md5(password),
                 success : function(res){
-                    lrSuccess(res, username, password);
+                    if(res.success === true){
+                        lrSuccess(username);
+                    }else{
+                        Dialog.normal(res.data.reason);
+                    }
                 },
                 error : handle_connection_fail
             });
         }
     );
-    function getFavor(list) {
 
-    }
     personal_info.setCallback(
         function(){
             $.ajax({
@@ -566,11 +597,11 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
 
                         }
                     }
-                   
+
                 },
                 error : handle_connection_fail
             });
-            
+
         },
         function(){
             $.ajax({
@@ -611,13 +642,13 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
                 url : url.logout,
                 success : function(res){
                     /*if(res.success === true){
-                        personal_info.hidden();
-                        account.show();
-                    }else if(handle_server_wrong(res.data)){
-                        if('reason' in res.data){
+                     personal_info.hidden();
+                     account.show();
+                     }else if(handle_server_wrong(res.data)){
+                     if('reason' in res.data){
 
-                        }
-                    }*/
+                     }
+                     }*/
                     personal_info.hidden();
                     account.show();
                     is_login = false;
@@ -628,4 +659,17 @@ var shit = (function(player, playlist, account, personal_info, Mobile){
             });
         }
     );
-})(player, playlist, account, personal_info, Mobile);
+}
+
+$.ajax({
+    url : url.session,
+    success : function (res) {
+        if(res == ''){
+
+        }else{
+            lrSuccess(res);
+        }
+    },
+    error : handle_connection_fail,
+    complete : init
+});
