@@ -346,7 +346,9 @@ function init(){
                     if(res.success === true){
                         playlist.jump('jump');
                         playlist.fill(res.data, 'show-album', site);
+
                         if(is_login){
+                            playlist.displayFavor(true);
                             isCurSongFavor(url.get_favor_album, id, site, personal_info.useId(), function (has) {
                                 //player.switchFavorIcon(has);
                                 playlist.switchFavorIcon(has);
@@ -370,6 +372,7 @@ function init(){
                         playlist.jump('jump');
                         playlist.fill(res.data, 'show-playlist', site);
                         if(is_login){
+                            playlist.displayFavor(true);
                             isCurSongFavor(url.get_favor_playlist, id, site, personal_info.useId(), function (has) {
                                 //player.switchFavorIcon(has);
                                 playlist.switchFavorIcon(has);
