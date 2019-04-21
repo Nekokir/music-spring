@@ -608,7 +608,7 @@ function init(){
                 url : url.get_favor_album + '?userId=' + personal_info.useId(),
                 success : function(res){
                     if(res.success === true){
-                        playlist.fill(res.data, 'album', null);
+                        playlist.fill(res.data, 'album-favor', null);
                         playlist.jump('search', 'a');
 
                     }else if(handle_server_wrong(res.data)){

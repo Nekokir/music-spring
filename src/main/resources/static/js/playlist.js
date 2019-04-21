@@ -280,6 +280,21 @@ var playlist = (function(){
                 }
                 
                 break;
+                case 'album-favor':
+                    this.clear('album');
+                    if(sub === null){
+                        for(let i = 0; i < shit.length;){
+                            let album = shit[i];
+                            addAlbumDOM(++i, album.name, album.artist, album.publishtime, album.id, album.site);
+                        }
+                    }else{
+                        for(let i = 0; i < shit.length;){
+                            let album = shit[i];
+                            addAlbumDOM(++i, album.name, album.artist, album.publishtime, album.id, sub);
+                        }
+                    }
+
+                    break;
                 //填充歌单的搜索结果
                 case 'playlist':
                 this.clear(type);
@@ -314,14 +329,14 @@ var playlist = (function(){
                 //显示这个专辑的内容
                 case 'show-album':{
                     this.clear('show');
-                    fillShowInfo('专辑', shit.name, shit.picUrl, shit.artist, shit.publishtime);
+                    fillShowInfo('专辑', shit.name, shit.picUrl, shit.artist, shit.publishTime);
 
                     let songs = shit.songs;
 
                     PA_id = shit.id;
                     PA_name = shit.name;
                     PA_size = songs.length;
-                    PA_publishtime = shit.publishtime;
+                    PA_publishtime = shit.publishTime;
                     PA_site = sub;
                     PA_artist = shit.artist;
 

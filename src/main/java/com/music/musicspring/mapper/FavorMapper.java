@@ -34,9 +34,9 @@ public interface FavorMapper {
     @Delete("delete from song where record in (select a.record  from (select record from song where userID = #{userId} and site = #{site} and id = #{id})a)")
     boolean deleteSong(@Param("userId") String userId,@Param("site") String site,@Param("id") String id);
 
-    @Delete("delete from album where record in (select a.record  from (select record from song where userID = #{userId} and site = #{site} and id = #{id})a)")
+    @Delete("delete from album where record in (select a.record  from (select record from album where userID = #{userId} and site = #{site} and id = #{id})a)")
     boolean deleteAlbum(@Param("userId") String userId,@Param("site") String site,@Param("id") String id);
 
-    @Delete("delete from playlist where record in (select a.record  from (select record from song where userID = #{userId} and site = #{site} and id = #{id})a)")
+    @Delete("delete from playlist where record in (select a.record  from (select record from playlist where userID = #{userId} and site = #{site} and id = #{id})a)")
     boolean deletePlaylist(@Param("userId") String userId,@Param("site") String site,@Param("id") String id);
 }
